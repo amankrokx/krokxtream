@@ -1,0 +1,17 @@
+{
+    "name": "krokxtream",
+    "version": "1.0.0",
+    "description": "API for direct link of youtube music audio",
+    "main": "app.js",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "ytdl-core": "^4.1.2"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "node app.js"
+    },
+    "author": "amankrokx",
+    "license": "ISC"
+}
