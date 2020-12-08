@@ -1,0 +1,169 @@
+:root {
+    --d: #232526;
+    --d2: #344d26;
+    --g: #8cffa1;
+    --l: #a3b99a;
+    --w: #B0BEC5;
+    --b: #6455a9;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+*:focus {
+    outline: none;
+}
+
+* {
+    scrollbar-width: none;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer */
+    -webkit-user-select: none;
+    color: var(--w);
+    background-image: linear-gradient(-50deg, #0e0b18, #668964);
+}
+
+.hidden {
+    display: none;
+}
+
+div.offlineBanner,
+div.userinteract {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--w);
+}
+
+header {
+    height: 44px;
+    width: 100vw;
+    padding: 10px;
+}
+
+#rooms {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    height: calc(100vh - 176px);
+    width: auto;
+    white-space: nowrap;
+}
+
+div.room:first-of-type {
+    margin-left: 30px;
+}
+
+div.room {
+    display: inline-table;
+    margin: 10px;
+    width: calc(100vw - 70px);
+    height: calc(100vh - 196px);
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 3px 3px 8px 1px rgba(0, 0, 10, 0.75);
+}
+
+div.room span.roomname {
+    top: 10px;
+    position: relative;
+    left: 10px;
+}
+
+div.room div.msgs {
+    white-space: normal;
+    padding: 10px;
+    overflow-y: scroll;
+    height: calc(100vh - 278px);
+    margin-top: 10px;
+}
+
+div.room div.msgs span {
+    display: block;
+    margin-top: 10px;
+}
+
+div.room div.msgs span.chat {
+    color: var(--g);
+}
+
+div.room div.msgs span.mine {
+    text-align: right;
+    color: var(--l);
+}
+
+#player {
+    height: 132px;
+    padding: 20px;
+    width: 100vw;
+    overflow: hidden;
+}
+
+span.play,
+span.pause {
+    font-size: 4em;
+    padding: 4px;
+}
+
+#player input.volume {
+    -webkit-appearance: none;
+    height: 200px;
+    border-radius: 5px;
+    background: #ccc;
+    outline: none;
+    writing-mode: bt-lr;
+    -webkit-appearance: slider-vertical;
+    position: absolute;
+    height: 48px;
+    width: 2px;
+    right: 44px;
+    bottom: 52px;
+}
+
+div.reply {
+    display: table-row;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+div.reply input {
+    height: 44px;
+    width: calc(100vw - 114px);
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.0);
+    border-right: none;
+    color: var(--w);
+}
+
+div.reply span.send {
+    padding: 8px;
+    border: 2px inset;
+    display: inline;
+    top: 7.5px;
+    left: 1px;
+    position: relative;
+    border-left: none;
+    border-image: initial;
+}
+
+#player span.download {
+    float: right;
+    position: relative;
+    right: 40px;
+    bottom: -30px;
+    font-size: 32px;
+}
+
+
+/*box-shadow: 0 15px 12px 0px rgba(0, 0, 10, 0.75);*/

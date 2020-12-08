@@ -1,0 +1,35 @@
+{
+    "name": "Music Stream by amankrokx",
+    "short_name": "musicStream",
+    "description": "Progressive Web App that lists games submitted to the A-Frame category in the js13kGames 2017 competition.",
+    "icons": [{
+            "src": "/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-128.png",
+            "sizes": "128x128",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-256.png",
+            "sizes": "256x256",
+            "type": "image/png"
+        }
+    ],
+    "share_target": {
+        "action": "/index.html",
+        "method": "GET",
+        "enctype": "application/x-www-form-urlencoded",
+        "params": {
+            "title": "name",
+            "text": "description",
+            "url": "link"
+        }
+    },
+    "start_url": "/index.html",
+    "display": "standalone",
+    "theme_color": "#B12A34",
+    "background_color": "#B12A34"
+}
