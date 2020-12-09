@@ -1,30 +1,26 @@
 const express = require('express')
-const cors = require('cors')
+const cors = require('cors');
 const ytdl = require("ytdl-core")
 
-const app = express()
-    // Configure express plugins...
-app.use(cors())
+const app = express();
+
+app.use(cors());
 
 
-// Required functions...
-// Random ID generatore of length
 var idGen = function(len) {
-    return Math.floor(Math.random() * Math.floor('9'.repeat(len)))
+    return Math.floor(Math.random() * Math.floor('9'.repeat(len)));
 }
 
-// Main function handle for API calls
-app.get('/getAudioUrl', async(req, res) => {
+
+let getAudioUrl = async(req, res) => {
     try {
-        console.log(req.query.vid)
-        const isValid = ytdl.validateID(req.query.vid)
+        const isValid = ytdl.validateID(req.params.vinfo)
         console.log(isValid)
         if (!isValid) {
-            res.json({ 'error': 'invalid_link' })
-            return
+            return 'novideo'
         }
 
-        const videoInfo = await ytdl.getInfo('https://www.youtube.com/watch?v=' + req.query.vid)
+        const videoInfo = await ytdl.getInfo(url)
         let audioFormat = ytdl.chooseFormat(videoInfo.formats, {
             filter: "audioonly",
             quality: "highestaudio"
@@ -43,15 +39,15 @@ app.get('/getAudioUrl', async(req, res) => {
         })
     } catch (error) {
         console.log(error);
-        res.error(403)
+        res.error()
     }
-})
+}
 
-// Dummy request API
-app.get('/ping', (req, res) => {
+
+app.get('/book', (req, res) => {
     // We will be coding here
-    res.send('pong')
-})
+    res.send(req.query)
+});
 
 
 const PORT = process.env.PORT || 4001
