@@ -1,5 +1,5 @@
- // version 1.595
- const version = 1.595
+ // version 1.61 //new
+ const version = 1.61
  self.addEventListener('install', function(e) {
      e.waitUntil(
          caches.open('fox-store').then(function(cache) {

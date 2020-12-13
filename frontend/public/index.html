@@ -200,6 +200,7 @@
     <script type="text/javascript" src="./index.js"></script>
     <link rel="manifest" href="./manifest.webmanifest" defer/>
     <link rel="stylesheet" href="./material-icons.css" defer/>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
 </head>
 
 <body>
@@ -235,6 +236,28 @@
         <span class="material-icons add-button">cloud_download</span>
         <span class="material-icons" style="float: right;">person</span>
     </header>
+    <div id="navsupport" style="position: fixed; top: 0; left: 0; z-index: 5; display: none;height: 100vh;width: 100vw;background: rgba(0, 0, 0, 0.3);"></div>
+    <nav class="sidenav" style="position: fixed; z-index: 6; top: 0; right: -230px; width: 230px; max-height: 75vh; background: linear-gradient(50deg, var(--d2), var(--d));">
+        <div class="profile" style="height: 80px; padding: 10px; border-bottom: 1px solid var(--w);">
+            <img src="#" style="height: 60px;width: 60px;border-radius: 5px;" />
+            <span class="name" style="position: relative;vertical-align: middle;top: -25px;margin-left: 10px;font-size: 1.1em;">amankrokx</span>
+            <span class="material-icons signout" onclick="signout()" style="position: absolute;top: 46px;right: 10px;">login</span>
+            <span class="material-icons edit" style="float: right;">edit</span>
+        </div>
+        <div class="themes" style="padding: 15px;">
+            <span>Themes</span>
+            <span class="material-icons colors" style="float: right;position: relative;top: -3px;">color_lens</span>
+            <div class="drop hidden" style="padding: 10px;">
+                <span style="float: left;">Sunset</span>
+                <span style="color: var(--d);">■</span>
+                <span style="color: var(--d2);">■</span>
+                <span style="color: var(--g);">■</span>
+                <span style="color: var(--l);">■</span>
+                <span style="color: var(--w);">■</span>
+                <span style="color: var(--b);">■</span>
+            </div>
+        </div>
+    </nav>
 
     <div id="rooms">
         <div class="room create">
@@ -247,7 +270,7 @@
 
             </div>
             <div class="reply">
-                <input type="text" placeholder="Youtube Link here" />
+                <input type="text" placeholder="Youtube Search or Link here" />
                 <span class="material-icons send">send</span>
                 <!--<span class="material-icons chat">chat</span>
                 <span class="material-icons query">search</span>-->
@@ -274,6 +297,16 @@
 
     </div>
 
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="/__/firebase/7.19.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="/__/firebase/7.19.1/firebase-auth.js"></script>
+    <script src="/__/firebase/7.19.1/firebase-database.js"></script>
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+    <script type="text/javascript" src="./firebase.js"></script>
 
 </body>
 

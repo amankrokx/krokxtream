@@ -1,14 +1,19 @@
 :root {
-    --d: #232526;
-    --d2: #344d26;
+    --d: #CD7672;
+    --d2: #534666;
     --g: #8cffa1;
-    --l: #a3b99a;
-    --w: #B0BEC5;
-    --b: #6455a9;
+    --l: #138086;
+    --w: #EEB462;
+    --b: #DC8665;
 }
 
 *::-webkit-scrollbar {
     display: none;
+}
+
+input[type="text"]::placeholder {
+    color: var(--d);
+    opacity: 0.75;
 }
 
 *:focus {
@@ -29,7 +34,7 @@ body {
     /* Internet Explorer */
     -webkit-user-select: none;
     color: var(--w);
-    background-image: linear-gradient(-50deg, #0e0b18, #668964);
+    background-image: linear-gradient(50deg, var(--d2), var(--d));
 }
 
 .hidden {
@@ -163,6 +168,25 @@ div.reply span.send {
     right: 40px;
     bottom: -30px;
     font-size: 32px;
+}
+
+div.themes div.drop span {
+    font-size: 1.2em;
+    float: right;
+    margin-right: 3px;
+}
+
+#iframecontainer {
+    height: 80vh;
+    width: 80vw;
+    position: fixed;
+    top: 10vh;
+    left: 10vw;
+    z-index: 7;
+}
+
+div.themes div.drop span:first-of-type {
+    font-size: 0.9em;
 }
 
 

@@ -1,5 +1,5 @@
 // Super Global variables
-let play, pause, myname, playQuery, lastSong
+let play, pause, myname, playQuery, lastSong, hl, sl, appendmsg, playSong
 window.onload = () => {
     // Loader is the fitrst thing to work
     const tl = document.getElementById('loader')
@@ -9,11 +9,11 @@ window.onload = () => {
     var link = document.createElement("a");
 
 
-    function sl() {
+    sl = () => {
         tl.classList.remove('hidden')
     }
 
-    function hl() {
+    hl = () => {
         tl.classList.add('hidden')
     }
 
@@ -66,6 +66,7 @@ window.onload = () => {
     });
 
     // Online offline trigger
+    /*
     let offlineBanner = document.querySelector('.offlineBanner')
     window.addEventListener('online', () => {
         offlineBanner.style.display = 'none'
@@ -73,6 +74,7 @@ window.onload = () => {
     window.addEventListener('offline', () => {
         offlineBanner.style.display = 'block'
     });
+    */
 
     document.querySelector('.general').scrollIntoView({
         behavior: "smooth",
@@ -94,33 +96,6 @@ window.onload = () => {
         return url.match(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/)
     }
 
-    function forceDownload(blob, filename) {
-        var a = document.createElement('a');
-        a.download = filename;
-        a.href = blob;
-        // For Firefox https://stackoverflow.com/a/32226068
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    }
-
-    // Current blob size limit is around 500MB for browsers
-    function downloadResource(url, filename) {
-        if (!filename) filename = url.split('\\').pop().split('/').pop();
-        fetch(url, {
-                headers: new Headers({
-                    'Origin': 'youtube.com'
-                }),
-                mode: 'no-cors'
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                let blobUrl = window.URL.createObjectURL(blob);
-                forceDownload(blobUrl, filename);
-            })
-            .catch(e => console.error(e));
-    }
-
     const parsedUrl = new URL(window.location);
     // searchParams.get() will properly handle decoding the values.
     let linkShared
@@ -139,37 +114,6 @@ window.onload = () => {
         }
     }
 
-    let loggedin = (obj) => {
-        console.log('loggedin', obj)
-        if (obj.default) {
-            hl()
-            alert('welcome back')
-        } else {
-            alert('Welcome ' + obj.name)
-            localStorage.setItem('name', obj.name)
-            localStorage.setItem('id', obj.id)
-        }
-        myname = localStorage.getItem('name')
-        if (linkShared && !linkShared.used) {
-            if (linkShared.url) playQuery(linkShared.url)
-            else if (linkShared.title) playQuery('!p ' + linkShared.title)
-            linkShared.used = true
-        }
-    }
-
-    // Websocket
-
-    var HOST = location.origin.replace(/^http/, 'ws')
-    var ws = new WebSocket(HOST);
-
-    // WS pingpong functions
-    function ping() {
-        ws.send('__ping__');
-        tm = setTimeout(function() {
-            /// ---connection closed ///
-            window.location.reload
-        }, 3500);
-    }
 
     let updatePositionState = () => {
         if ('setPositionState' in navigator.mediaSession) {
@@ -188,10 +132,10 @@ window.onload = () => {
         updatePositionState()
     }
 
-    function playSong(song) {
+    playSong = (song) => {
         document.querySelector('source').src = song.audioUrl
         document.querySelector('#player div span.title').innerHTML = song.title
-        document.querySelector('#player div span.author').innerHTML = song.media.artist
+        document.querySelector('#player div span.author').innerHTML = song.artist
         audio.load()
         if ('mediaSession' in navigator) {
             let albumart = []
@@ -205,8 +149,8 @@ window.onload = () => {
 
             navigator.mediaSession.metadata = new MediaMetadata({
                 title: song.title,
-                artist: song.media.artist,
-                album: song.media.album,
+                artist: song.artist,
+                album: song.album,
                 artwork: albumart
             });
             navigator.mediaSession.setActionHandler('play', play);
@@ -246,96 +190,23 @@ window.onload = () => {
         play()
     }
 
-    function pong() {
-        clearTimeout(tm);
-    }
 
-    ws.onopen = function() {
-        console.log('ws connected')
-        hl()
-        setInterval(ping, 6000);
-        // Init login
-        let name = localStorage.getItem('name')
-        let id = localStorage.getItem('id')
-        if (name || id) { ws.send(JSON.stringify({ 'type': 'auth', 'name': name, 'id': id })) } else {
-            let name = window.prompt('Hi !\nWhats your name ?')
-            if (name) { ws.send(JSON.stringify({ 'type': 'auth', 'name': name })) }
+    /*
+    case 'play':
+        msgContainer.innerHTML += `<span class="commands"><b>Playing Song :</b><p style="text-align: center;"><i>${data.song.title}</i></p></span>`
+        lastSong = { 'url': data.song.audioUrl, 'title': data.song.title }
+        playSong(data.song)
+        break;
+
+    case 'chat':
+        if (data.message.length > 0) {
+            if (data.from == myname) msgContainer.innerHTML += `<span class="mine chat">${data.message}</span>`
+            else msgContainer.innerHTML += `<span class="chat">${data.message}</span>`
+            msgContainer.scrollTop = msgContainer.scrollHeight
+
         }
-    }
-
-    let data
-    ws.onmessage = function(ev) {
-        console.log(ev.data);
-        if (ev.data == '__pong__') {
-            pong();
-            return;
-        }
-        try { data = JSON.parse(ev.data); } catch (e) { console.error('ws data not a valid json string', e); }
-        switch (data.type) {
-            case 'auth':
-                switch (data.action) {
-                    case 'welcomeback':
-                        // Logged in already
-                        loggedin({ 'default': true });
-                        break;
-                    case 'welcomename':
-                        // Name in use already
-                        alert('Name already used. Changed to : ' + data.name)
-                        loggedin({ 'default': false, 'name': data.name, 'id': data.id })
-                        break;
-                    case 'welcomenew':
-                        // Brand new user
-                        loggedin({ 'default': false, 'name': data.name, 'id': data.id })
-                        break;
-
-                    default:
-                        break;
-                }
-                break;
-
-                /*case 'statusupdate':
-                    if (!data.empty) {
-                        document.querySelector('source').src = data.songdetails.url
-                        document.querySelector('#player div span.title').innerHTML = data.songdetails.vdetails.title
-                        document.querySelector('#player div span.author').innerHTML = data.songdetails.vdetails.author.name
-
-                        if (data.songdetails.state) {
-                            audio.load()
-                        }
-                    }
-                    break;*/
-            case 'play':
-                msgContainer.innerHTML += `<span class="commands"><b>Playing Song :</b><p style="text-align: center;"><i>${data.song.title}</i></p></span>`
-                lastSong = { 'url': data.song.audioUrl, 'title': data.song.title }
-                playSong(data.song)
-                break;
-
-            case 'chat':
-                if (data.message.length > 0) {
-                    if (data.from == myname) msgContainer.innerHTML += `<span class="mine chat">${data.message}</span>`
-                    else msgContainer.innerHTML += `<span class="chat">${data.message}</span>`
-                    msgContainer.scrollTop = msgContainer.scrollHeight
-
-                }
-                break
-            case 'download':
-                link.download = data.title;
-                link.href = '/download?id=' + data.id;
-                console.log(link)
-                    //link.click();
-            default:
-                break;
-        }
-    }
-
-    ws.onerror = (error) => {
-        console.log(`WebSocket error: ${error}`);
-    }
-
-    ws.onclose = () => {
-        window.location.reload()
-    }
-
+        break
+    */
     // Controls
     play = () => {
         audio.play()
@@ -367,53 +238,90 @@ window.onload = () => {
         }
     });
 
-    document.querySelector('#player span.download').onclick = () => {
-        ws.send(JSON.stringify({ 'type': 'download', 'url': lastSong.url, 'title': lastSong.title }))
-            //downloadResource(lastSong.url, lastSong.title)
-    }
-
     playQuery = async(query) => {
         if (validURL(query)) {
             let r = await extractID(query)
-            console.log(r)
             if (r && r[1].length > 0) {
                 document.querySelector('div.reply input').value = ''
-                console.log(query);
-                ws.send(JSON.stringify({ 'type': 'queryUrl', 'queryUrl': query, 'from': myname }))
+                console.log(r[1])
+                fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?vid=' + r[1]).then(res => {
+                    return res.json()
+                }).then(song => {
+                    playSong(song)
+                })
             } else {
                 alert('Not valid Link !')
                 document.querySelector('div.reply input').value = ''
             }
 
+        } else if (query.startsWith("!p ")) {
+            fetch('https://youtube-v31.p.rapidapi.com/search?q=' + encodeURI(query.slice(3)) + '&part=snippet%2Cid&maxResults=1', {
+                "method": "GET",
+                "headers": {
+                    "x-rapidapi-key": "15be109401msh039dc334993a18cp1b9113jsn7f88dd5900bf",
+                    "x-rapidapi-host": "youtube-v31.p.rapidapi.com"
+                }
+            }).then(res => {
+                return res.json()
+            }).then(r => {
+                console.log(r)
+                if (r.items.length > 0) {
+                    fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?vid=' + r.items[0].id.videoId).then(res => {
+                        return res.json()
+                    }).then(song => {
+                        let timestamp = new Date().toString()
+                        writeTo({
+                            videoId: song.videoId,
+                            title: song.title,
+                            artist: song.media.artist,
+                            length: song.length
+                        }, 'general', true)
+                        addQueue({
+                            title: song.title,
+                            videoId: song.videoId,
+                            artist: song.media.artist,
+                            album: song.media.album,
+                            thumbnail: song.thumbnail,
+                            length: song.length,
+                            audioUrl: song.audioUrl,
+                            time: timestamp
+                        }, 'general')
+                        //playSong(song)
+                    })
+                    document.querySelector('div.reply input').value = ''
+                }
+            })
+
         } else {
-            if (query.startsWith("!p ")) {
-                fetch('https://youtube-v31.p.rapidapi.com/search?q=' + encodeURI(query.slice(3)) + '&part=snippet%2Cid&maxResults=1', {
-                    "method": "GET",
-                    "headers": {
-                        "x-rapidapi-key": "15be109401msh039dc334993a18cp1b9113jsn7f88dd5900bf",
-                        "x-rapidapi-host": "youtube-v31.p.rapidapi.com"
-                    }
-                }).then(res => {
-                    return res.json()
-                }).then(r => {
-                    console.log(r)
-                    if (r.items.length > 0) {
-                        let url = 'https://www.youtube.com/watch?v=' + r.items[0].id.videoId
-                        console.log(url)
-                        ws.send(JSON.stringify({ 'type': 'queryUrl', 'queryUrl': url, 'from': myname }))
-                        document.querySelector('div.reply input').value = ''
-                    }
-                })
-
-            } else {
-                ws.send(JSON.stringify({ 'type': 'chat', 'message': query, 'from': myname }))
-                document.querySelector('div.reply input').value = ''
-            }
-
+            writeTo(query.toString(), 'general', false)
+            document.querySelector('div.reply input').value = ''
         }
     }
 
     document.querySelector('div.reply span.send').onclick = () => {
         playQuery(document.querySelector('div.reply input').value)
+    }
+
+    document.querySelector('header span:last-of-type').onclick = () => {
+        document.querySelector('nav').style.right = 0
+        document.getElementById('navsupport').style.display = 'block'
+    }
+
+    document.getElementById('navsupport').onmouseenter = () => {
+        document.querySelector('nav').style.right = '-230px'
+        document.getElementById('navsupport').style.display = 'none'
+    }
+
+    document.querySelector('div.themes').onclick = () => {
+        document.querySelector('div.themes div.drop').classList.toggle('hidden')
+    }
+
+    appendmsg = (msg, key) => {
+        if(msg.song) {msgContainer.innerHTML += `<span class="commands"><b>Playing Song :</b><p style="text-align: center;"><i>${msg.data.title}</i></p></span>`}
+        else {
+            if (msg.from.uid == me.uid) msgContainer.innerHTML += `<span id="${key}" class="mine chat">${msg.data}</span>`
+            else msgContainer.innerHTML += `<span id="${key}" class="chat">${msg.data}</span>`
+        }
+        msgContainer.scrollTop = msgContainer.scrollHeight
     }
 }

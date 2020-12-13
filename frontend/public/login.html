@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>krokXtream | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @keyframes ldio-gpbbhzzh67p {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0
+            }
+        }
+        
+        .ldio-gpbbhzzh67p div {
+            left: 47.5px;
+            top: 27.5px;
+            position: absolute;
+            animation: ldio-gpbbhzzh67p linear 2.4390243902439024s infinite;
+            background: #ffffff;
+            width: 5px;
+            height: 5px;
+            border-radius: 1.1500000000000001px / 1.1500000000000001px;
+            transform-origin: 2.5px 22.5px;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(1) {
+            transform: rotate(0deg);
+            animation-delay: -2.2865853658536586s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(2) {
+            transform: rotate(22.5deg);
+            animation-delay: -2.1341463414634148s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(3) {
+            transform: rotate(45deg);
+            animation-delay: -1.981707317073171s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(4) {
+            transform: rotate(67.5deg);
+            animation-delay: -1.829268292682927s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(5) {
+            transform: rotate(90deg);
+            animation-delay: -1.676829268292683s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(6) {
+            transform: rotate(112.5deg);
+            animation-delay: -1.524390243902439s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(7) {
+            transform: rotate(135deg);
+            animation-delay: -1.3719512195121952s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(8) {
+            transform: rotate(157.5deg);
+            animation-delay: -1.2195121951219512s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(9) {
+            transform: rotate(180deg);
+            animation-delay: -1.0670731707317074s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(10) {
+            transform: rotate(202.5deg);
+            animation-delay: -0.9146341463414634s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(11) {
+            transform: rotate(225deg);
+            animation-delay: -0.7621951219512195s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(12) {
+            transform: rotate(247.5deg);
+            animation-delay: -0.6097560975609756s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(13) {
+            transform: rotate(270deg);
+            animation-delay: -0.4573170731707317s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(14) {
+            transform: rotate(292.5deg);
+            animation-delay: -0.3048780487804878s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(15) {
+            transform: rotate(315deg);
+            animation-delay: -0.1524390243902439s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(16) {
+            transform: rotate(337.5deg);
+            animation-delay: 0s;
+            background: #ffffff;
+        }
+        
+        .loadingio-spinner-spinner-h9242q2dhnj {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            overflow: hidden;
+            background: none;
+            position: fixed;
+            top: calc((100vh - 100px)/2);
+            left: calc((100vw - 100px)/2);
+            z-index: 5;
+        }
+        
+        .ldio-gpbbhzzh67p {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform: translateZ(0) scale(1);
+            backface-visibility: hidden;
+            transform-origin: 0 0;
+            /* see note above */
+        }
+        
+        .ldio-gpbbhzzh67p div {
+            box-sizing: content-box;
+        }
+        
+        #loader {
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            z-index: 4;
+        }
+        
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            user-select: none;
+        }
+        
+        *:focus {
+            outline: none;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+        html {
+            height: calc((100% - 530px) + 650px);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: rgb(119, 186, 255);
+            background: linear-gradient(60deg, rgba(119, 186, 255, 1) 0%, rgba(91, 134, 249, 1) 15%, rgba(255, 104, 141, 1) 86%, rgba(255, 165, 165, 1) 100%);
+        }
+        
+        #main {
+            width: 90vw;
+            height: auto;
+            background: #ffffff;
+            position: absolute;
+            top: 10vh;
+            left: 5vw;
+            border-radius: 15px;
+            transition: height 0.5s ease-in-out;
+            overflow-y: hidden;
+        }
+        
+        #main h1 {
+            margin-top: 40px;
+            margin-bottom: 30px;
+            font-weight: bolder;
+        }
+        
+        #main div.login form {
+            width: 240px;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.8em;
+            font-weight: 300;
+            color: #999999;
+            margin-left: 10px;
+            float: left;
+        }
+        
+        input {
+            font-size: 1.1em;
+            padding-left: 8px;
+            display: block;
+            position: relative;
+            height: 40px;
+            border: 0;
+            border-bottom: 1px solid #bbbbbb;
+            border-radius: 10px;
+            color: #888888;
+            width: 220px;
+        }
+        
+        input:focus,
+        input:hover {
+            border-bottom: 1px solid transparent;
+            border-image: linear-gradient(60deg, rgba(119, 186, 255, 1) 0%, rgba(91, 134, 249, 1) 15%, rgba(255, 104, 141, 1) 86%, rgba(255, 165, 165, 1) 100%);
+            border-image-slice: 1;
+        }
+        
+        input::placeholder {
+            color: #aaaaaa;
+        }
+        
+        input.submit,
+        input.sendOTP {
+            color: #ffffff;
+            background: rgb(119, 186, 255);
+            background: linear-gradient(50deg, rgba(119, 186, 255, 1) 0%, rgb(126, 165, 255) 5%, rgba(255, 104, 141, 1) 95%, rgba(255, 165, 165, 1) 100%);
+        }
+        
+        form span.forget {
+            float: right;
+            color: #aaaaaa;
+            margin-top: 8px;
+            font-size: 0.7em;
+        }
+        
+        div.login span.alt,
+        div.login span.toggle {
+            position: relative;
+            font-size: 0.8em;
+            color: #999999;
+            bottom: 15px;
+            background: linear-gradient(50deg, rgba(119, 186, 255, 1) 0%, rgb(126, 165, 255) 5%, rgba(255, 104, 141, 1) 95%, rgba(255, 165, 165, 1) 100%);
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+        }
+        
+        div.imgs {
+            position: relative;
+            top: 5px;
+            height: 45px;
+            width: 145px;
+        }
+        
+        div.imgs img {
+            display: inline;
+            height: 40px;
+            width: 40px;
+            margin: 2.5px;
+        }
+    </style>
+    <script>
+        var tl
+
+        function st() {
+            tl.classList.remove('hidden')
+        }
+
+        function ht() {
+            tl.classList.add('hidden')
+        }
+        window.onload = () => {
+            tl = document.getElementById('loader')
+        }
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    <script src="/__/firebase/7.19.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="/__/firebase/7.19.1/firebase-auth.js"></script>
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+</head>
+
+<body>
+    <div id="loader">
+        <div class="loadingio-spinner-spinner-h9242q2dhnj">
+            <div class="ldio-gpbbhzzh67p">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <center>
+        <div id="main">
+            <div class="login">
+
+                <h1>Login</h1>
+                <div id="firebaseui-auth-container" lang="en" style="margin-left: 6vw;"></div>
+            </div>
+            <br />
+        </div>
+    </center>
+
+    <script>
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                window.location = './index.html'
+                    // ...
+            }
+        });
+
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+        ui.start('#firebaseui-auth-container', {
+            callbacks: {
+                signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+                    // User successfully signed in.
+                    // Return type determines whether we continue the redirect automatically
+                    // or whether we leave that to developer to handle.
+                    console.log(authResult)
+                    window.location = './index.html'
+                    return true;
+                },
+                uiShown: function() {
+                    // The widget is rendered.
+                    // Hide the loader.
+                    document.getElementById('loader').classList.add('hidden')
+                },
+                signInFailure: function(error) {
+                    // For merge conflicts, the error.code will be
+                    // 'firebaseui/anonymous-upgrade-merge-conflict'.
+                    if (error.code != 'firebaseui/anonymous-upgrade-merge-conflict') {
+                        return Promise.resolve();
+                    }
+                    // The credential the user tried to sign in with.
+                    var cred = error.credential;
+                    // Copy data from anonymous user to permanent user and delete anonymous
+                    // user.
+                    // ...
+                    // Finish sign-in after data is copied.
+                    return firebase.auth().signInWithCredential(cred);
+                }
+            },
+            // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+            signInFlow: 'popup',
+            autoUpgradeAnonymousUsers: true,
+            signInSuccessUrl: './index.html',
+            signInOptions: [{
+                provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                recaptchaParameters: {
+                    type: 'image', // 'audio'
+                    size: 'normal', // 'invisible' or 'compact'
+                    badge: 'bottomleft' //' bottomright' or 'inline' applies to invisible.
+                },
+                defaultCountry: 'IN', // Set default country to the United Kingdom (+44).
+                // For prefilling the national number, set defaultNationNumber.
+                // This will only be observed if only phone Auth provider is used since
+                // for multiple providers, the NASCAR screen will always render first
+                // with a 'sign in with phone number' button.
+                defaultNationalNumber: '1234567890',
+                // You can also pass the full phone number string instead of the
+                // 'defaultCountry' and 'defaultNationalNumber'. However, in this case,
+                // the first country ID that matches the country code will be used to
+                // populate the country selector. So for countries that share the same
+                // country code, the selected country may not be the expected one.
+                // In that case, pass the 'defaultCountry' instead to ensure the exact
+                // country is selected. The 'defaultCountry' and 'defaultNationaNumber'
+                // will always have higher priority than 'loginHint' which will be ignored
+                // in their favor. In this case, the default country will be 'GB' even
+                // though 'loginHint' specified the country code as '+1'.
+                loginHint: '+911234567890'
+            }, {
+                provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                customParameters: {
+                    // Forces account selection even when one account
+                    // is available.
+                    prompt: 'select_account'
+                }
+            }, {
+                provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
+                requireDisplayName: true
+
+            }]
+        });
+
+        if (ui.isPendingRedirect()) {
+            ui.start('#firebaseui-auth-container', uiConfig);
+        }
+    </script>
+
+</body>
+
+</html>
