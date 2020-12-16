@@ -1,5 +1,4 @@
- // version 1.61 //new
- const version = 1.61
+ // version development 1.8.1
  self.addEventListener('install', function(e) {
      e.waitUntil(
          caches.open('fox-store').then(function(cache) {

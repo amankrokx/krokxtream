@@ -133,6 +133,8 @@ window.onload = () => {
     }
 
     playSong = (song) => {
+        if(!song.artist) song.artist = null
+        if(!song.album) song.album = null
         document.querySelector('source').src = song.audioUrl
         document.querySelector('#player div span.title').innerHTML = song.title
         document.querySelector('#player div span.author').innerHTML = song.artist
@@ -270,22 +272,7 @@ window.onload = () => {
                         return res.json()
                     }).then(song => {
                         let timestamp = new Date().toString()
-                        writeTo({
-                            videoId: song.videoId,
-                            title: song.title,
-                            artist: song.media.artist,
-                            length: song.length
-                        }, 'general', true)
-                        addQueue({
-                            title: song.title,
-                            videoId: song.videoId,
-                            artist: song.media.artist,
-                            album: song.media.album,
-                            thumbnail: song.thumbnail,
-                            length: song.length,
-                            audioUrl: song.audioUrl,
-                            time: timestamp
-                        }, 'general')
+                        writeTo(song, 'general', true)
                         //playSong(song)
                     })
                     document.querySelector('div.reply input').value = ''

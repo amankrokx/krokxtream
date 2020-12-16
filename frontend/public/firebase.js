@@ -36,34 +36,72 @@ firebase.auth().onAuthStateChanged(function(user) {
 var database = firebase.database();
 
 // Write chats to DB
-let writeTo = (message, group, music) => {
+// Write temprorary data and heavy data here, these message wont be persistant for much longer period.
+// Do not add audioUrl to history. History will be persistant for much longer time.
+// Lets make it unified and complex .
+let writeTo = (data, group, music) => {
     if (!group) group = 'general'
     let timestamp = new Date().toString()
-    database.ref('chats/'+group).push().set({
-        data: message,
-        from: { uid: me.uid, name: me.displayName },
-        time: timestamp,
-        likes: {
-            /*mvSeyyDuBaeIm637uRUW8AECeEH3: "heart"*/
-        },
-        song: music
-    })
+
+    if(music) {
+        // Grab key of corrosponding Chat entry
+        let key = database.ref('songs/'+group+'/history').push().key
+
+        // Sanatize undefined values
+        let media = JSON.parse(JSON.stringify({
+            title: data.title,
+            videoId: data.videoId,
+            artist: data.media.artist,
+            album: data.media.album,
+            thumbnail: data.thumbnail,
+            length: data.length,
+            audioUrl: data.audioUrl
+        }, function(k, v) {
+            if (v === undefined) { return null; }
+            return v;
+         }))
+        // History will contain title, length and videoId plus the dynamic properties like status and current playing etc.
+        database.ref('songs/'+group+'/history').push().set({
+            title: data.title,
+            length: data.length,
+            videoId: data.videoId,
+            chatRef: key,
+            from: { uid: me.uid, name: me.displayName },
+            time: timestamp
+        })
+        // Write to chat too
+        database.ref('chats/'+group+'/'+key).set({
+            data: media,
+            from: { uid: me.uid, name: me.displayName },
+            song: true,
+            time: timestamp
+        })
+    } else {
+        database.ref('chats/'+group).push().set({
+            data: data,
+            from: { uid: me.uid, name: me.displayName },
+            time: timestamp,
+            /*likes: {
+                mvSeyyDuBaeIm637uRUW8AECeEH3: "heart"
+            }*/
+        })
+    }
 }
 
-let addQueue = (song, group) => {
-    console.log(song)
-    if (!group) group = 'general'
-    database.ref('songs/'+group+'/history').push().set(song)
+let readFrom = (path) => {
+    database.ref(path).once('value').then((snapshot) => {
+        return snapshot.val()
+      });
 }
+
 
 // Listen for chats in DB
 
-database.ref('chats/general').orderByChild('time').limitToLast(10).on('child_added', (data) => {
-    appendmsg(data.val(), data.key)
-});
-
-database.ref('songs/general/history').orderByChild('time').limitToLast(1).on('child_added', (data) => {
-    if (data.val().current) playSong(data.val())
+database.ref('chats/general').limitToLast(20).on('child_added', (data) => {
+    let chunk = data.val()
+    appendmsg(chunk, data.key)
+    // intellegence needed here
+    // play song will do it
 });
 
 function signout() {
