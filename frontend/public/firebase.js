@@ -91,18 +91,22 @@ let writeTo = (data, group, music) => {
 let readFrom = (path) => {
     database.ref(path).once('value').then((snapshot) => {
         return snapshot.val()
-      });
+      })
 }
 
 
 // Listen for chats in DB
 
-database.ref('chats/general').limitToLast(20).on('child_added', (data) => {
+database.ref('chats/general').limitToLast(21).on('child_added', (data) => {
     let chunk = data.val()
     appendmsg(chunk, data.key)
-    // intellegence needed here
-    // play song will do it
-});
+})
+
+// Lets capture history to get songs
+database.ref('songs/general/history').orderByChild('status').startAt('true').on('child_added', (data) => {
+    let chunk = data.val()
+    console.log([chunk, data.key])
+})
 
 function signout() {
     firebase.auth().signOut()

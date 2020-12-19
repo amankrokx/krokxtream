@@ -62,7 +62,7 @@ header {
 #rooms {
     overflow-y: hidden;
     overflow-x: scroll;
-    height: calc(100vh - 176px);
+    height: calc(100vh - 256px);
     width: auto;
     white-space: nowrap;
 }
@@ -75,7 +75,7 @@ div.room {
     display: inline-table;
     margin: 10px;
     width: calc(100vw - 70px);
-    height: calc(100vh - 196px);
+    height: calc(100vh - 276px);
     background-color: rgba(255, 255, 255, 0.2);
     box-shadow: 3px 3px 8px 1px rgba(0, 0, 10, 0.75);
 }
@@ -90,7 +90,7 @@ div.room div.msgs {
     white-space: normal;
     padding: 10px;
     overflow-y: scroll;
-    height: calc(100vh - 278px);
+    height: calc(100vh - 348px);
     margin-top: 10px;
 }
 
@@ -109,7 +109,7 @@ div.room div.msgs span.mine {
 }
 
 #player {
-    height: 132px;
+    height: 112px;
     padding: 20px;
     width: 100vw;
     overflow: hidden;

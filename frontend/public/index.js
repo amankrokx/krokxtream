@@ -114,6 +114,10 @@ window.onload = () => {
         }
     }
 
+    // Wave.js
+    /*let wave = new Wave();
+    wave.fromElement("audio","output", {type:"bars"});*/
+
 
     let updatePositionState = () => {
         if ('setPositionState' in navigator.mediaSession) {

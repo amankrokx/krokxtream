@@ -201,6 +201,7 @@
     <link rel="manifest" href="./manifest.webmanifest" defer/>
     <link rel="stylesheet" href="./material-icons.css" defer/>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+    
 </head>
 
 <body>
@@ -281,6 +282,11 @@
         </div>
     </div>
 
+
+    <div id="queue" style="height: 140px;">queue plus history</div>
+
+    <canvas id="output" height="100" width="380"></canvas>
+    
     <div id="player">
         <span class="material-icons play" onclick="play()" style="display: inline-block;">play_arrow</span>
         <span class="material-icons pause hidden" onclick="pause()" style="display: none;">pause</span>
@@ -290,7 +296,7 @@
         </div>
         <span class="material-icons download" style="display: none;">save_alt</span>
         <input class="volume" orient="vertical" type="range" step="1" value="10" min="1" max="10">
-        <audio autoplay hidden>
+        <audio id="audio" autoplay hidden>
             <source src="#" type="audio/webm">
                        unsupported !! 
            </audio>
