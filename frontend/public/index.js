@@ -1,4 +1,5 @@
 // Super Global variables
+
 let play, pause, myname, playQuery, lastSong, hl, sl, appendmsg, playSong
 window.onload = () => {
     // Loader is the fitrst thing to work

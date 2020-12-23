@@ -53,7 +53,7 @@
         *::-webkit-scrollbar {
             display: none;
         }
-        span.button {
+        .button {
             padding: 8px;
             margin-left: 5px;
             margin-right: 5px;
@@ -61,6 +61,13 @@
             background-image: var(--buttonGradient);
             box-shadow: 1px 3px 9px 1px var(--sbsd), -1px -1px 9px -2px var(--sbsl);
             transition: background 0.3s cubic-bezier(0.45, 0.29, 0.91, 0.63);
+        }
+
+        div.button {
+            padding: 0 0 0 10px;
+            margin: 5px 0 5px 0;
+            border-radius: 20px;
+            height: 40px;
         }
 
         span.button:hover {
@@ -82,7 +89,7 @@
             bottom: 250px;
             max-height: 440px;
         }
-        div.room div.chats div.message { padding: 5px 10px 5px 10px;}
+        div.room div.chats div.message { padding: 5px 10px 5px 10px;width: calc(100vw - 30px);}
 
         #rooms div.room div.listners img {
             height: 40px;
@@ -95,13 +102,21 @@
 
         #rooms div.room div.chats img {
             height: 24px;
-            width: 25px;
+            width: 24px;
             border-radius: 50%;
-            vertical-align: sub;
+            vertical-align: middle;
         }
 
         #rooms div.room div.chats span.name {
             color: var(--sbt);
+            vertical-align: middle;
+        }
+        div.room div.chats div.message div {
+            width: auto;
+            display: inline-block;
+            max-width: 200px;
+            white-space: normal;
+            margin-left: 34px;
         }
 
         div.room div.listners {
@@ -115,8 +130,10 @@
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="./ui.js" ></script>
+    <script src="./index2.js" defer ></script>
+    <script src="./ui.js" defer ></script>
     <link rel="stylesheet" href="./material-icons.css" defer/>
+    <link rel="manifest" href="./manifest.webmanifest" defer/>
 </head>
 
 <body>
@@ -131,9 +148,17 @@
             <img src="./media/aman.jpg" style="height: 60px;width: 60px;vertical-align: middle;border-radius: 50%;">
             <span class="name" style="vertical-align: middle;margin-left: 10px;font-size: 1.2em;">Aman Kumar</span>
             <span class="material-icons button edit" style="float: right;margin-top: 10px;">edit</span>
+            <div class="signout button" onclick="signout()" style="background-image: var(--buttonGradient);/* border-radius: 20px; */">
+                <span style="position: relative;top: 10px;">LogOut</span>
+                <span class="material-icons button logout" style="float: right;">login</span>
+            </div>
     </div>
         
     <div id="fullblur" style="position: fixed; top: 0; left: 0;height: 100vh;width: 100vw;opacity: 0;display: none;backdrop-filter: blur(5px);z-index: 2;" ></div>
+
+    <div id="playlist" onblur="toggleDiv('#playlist', true)" tabindex="-1" style="position: fixed;z-index: 3;height: 400px;width: 80vw;left: 10vw;bottom: 230px;backdrop-filter: blur(5px);padding: 15px;border-radius: 20px;box-shadow: black 2px 5px 9px 0px;opacity: 0;display: none;">
+        History
+    </div>
 
     <div id="rooms">    
         <div class="room general">
@@ -145,22 +170,26 @@
                 <div class="message" id="-MObLEcGAjhyQjrHXB1L">
                     <img src="./media/letters/A.svg">
                     <span class="name" id="xn1QYOZjugfgnhjyfgqrJP1Y7TCz3PCn1">Ankur</span> 
-                    <span class="data">Abey Gaana baja jaldi</span>
+                    <br />
+                    <div class="data">Abey Gaana baja jaldi</div>
                 </div>
                 <div class="message" id="-MObLEcGArEoQjrHXB1L">
                     <img src="./media/aman.jpg">
                     <span class="name" id="xn1QYOZjugYJKqrJP1Y7TCz3PCn1">Aman</span> 
-                    <span class="data">Bs kuch din aur wait kr le</span>
+                    <br />
+                    <div class="data">Bs kuch din aur wait kr le</div>
                 </div>
                 <div class="message" id="-MObLEcGArEoQjrfh">
                     <img src="./media/letters/A.svg">
                     <span class="name" id="xn1QYOZjugjhbdfgJP1Y7TCz3PCn1">Ankur</span> 
-                    <span class="data">Kitna wait kare, daily bolta hai kl kl</span>
+                    <br />
+                    <div class="data">Kitna wait kare, daily bolta hai kl kl</div>
                 </div>
                 <div class="message" id="-MObLEcGArEojehrv1L">
                     <img src="./media/aman.jpg">
                     <span class="name" id="xn1QYOZjugkjerhv1Y7TCz3PCn1">Aman</span> 
-                    <span class="data">Kal ke baad aane wala kal pakka</span>
+                    <br />
+                    <div class="data">Kal ke baad aane wala kal pakka</div>
                 </div>
             </div>
         </div>
@@ -168,7 +197,7 @@
 
     <div id="reply" style="position: fixed;bottom: 205px;left: 0;height: 40px;padding: 0 25px 0 25px;">
         <input type="text" placeholder="Say Something..." style="border: 0;height: 40px;vertical-align: bottom;width: calc(100vw - 90px);border-radius: 20px;padding: 8px;background: rgba(0,0,0,0.4);color: var(--sbw);">
-        <span class="material-icons button reply" style="transform: rotate(90deg);">reply</span>
+        <span class="material-icons button reply" onclick="sendMessage()" style="transform: rotate(90deg);">reply</span>
     </div>
 
     <div id="art_container" style="position: fixed; z-index: -1;width: 100vw;height: calc(100vh - 280px); top: 70px;">
@@ -176,7 +205,7 @@
     </div>
 
 
-    <div id="player" style="background-image: var(--buttonGradient);position: absolute; width: calc(100vw - 30px); bottom: 0;left: 0;padding-top: 5px;margin: 0 15px 8px 15px;border-radius: 20px;">
+    <div id="player" style="background-image: var(--buttonGradient);position: fixed; width: calc(100vw - 30px); bottom: 0;left: 0;padding-top: 5px;margin: 0 15px 8px 15px;border-radius: 20px;">
         <div style="height: 64px;">
             <div style="display: inline-block; height: inherit; padding: 15px;">
                 <b><span class="title" style="text-shadow: 2px 1px 3px var(--sbsd), -2px -1px 3px var(--sbsl);">Enemy</span></b><br>
@@ -185,7 +214,7 @@
         <div class="playlist" style="display: inline-block; padding: 10px; position: absolute; right: 0; height: inherit;">
             <span class="material-icons button play" onclick="audio.play()">play_arrow</span>
             <span class="material-icons button pause" style="display: none;" onclick="audio.pause()">pause</span>
-            <span class="material-icons button queue">queue_music</span>
+            <span class="material-icons button queue" onclick="toggleDiv('#playlist')">queue_music</span>
         </div>
         </div>
 
@@ -208,22 +237,33 @@
                 </div>
             </center>
         </div>
-        <div class="volume_abs" style="opacity: 0;display: none;" tabindex="0" onblur="toggleDiv('div.volume_abs',false)">
-            <div class="volume" style="z-index: 5; position: fixed;top: calc(50vh - 100px);right: 10px;height: 200px;border-radius: 20px;">
-                <span class="material-icons button volume_up" style="margin: 0;">volume_up</span>
-                <span class="material-icons button volume_down" style="position: absolute;bottom: 50px;left: 0;margin: 0;" draggable="true">volume_down</span>
-                <span class="material-icons button mute" style="margin-top: 10px;position: absolute;bottom: 0;left: 0;margin: 0;">volume_mute</span>
-            </div>
-            <div class="volume_container" style="z-index: 4;position: fixed;top: calc(50vh - 100px);right: 10px;height: 200px;background-image: var(--buttonGradient);border-radius: 20px;height: 200px;width: 40px; box-shadow: 1px 2px 6px 2px black;">
-                <div class="volume_background" style="background-image: linear-gradient(180deg, var(--sbl), var(--sbd));border-radius: 20px;height: 90px;position: absolute;bottom: 0;width: 40px;"></div>
-            </div>
+    </div>
+    
+    <div class="volume_abs" style="opacity: 0;display: none;" tabindex="0" onblur="toggleDiv('div.volume_abs',false)">
+        <div class="volume" style="z-index: 5; position: fixed;top: calc(50vh - 100px);right: 10px;height: 200px;border-radius: 20px;">
+            <span class="material-icons button volume_up" style="margin: 0;">volume_up</span>
+            <span class="material-icons button volume_down" style="position: absolute;bottom: 50px;left: 0;margin: 0;" draggable="true">volume_down</span>
+            <span class="material-icons button mute" style="margin-top: 10px;position: absolute;bottom: 0;left: 0;margin: 0;">volume_mute</span>
+        </div>
+        <div class="volume_container" style="z-index: 4;position: fixed;top: calc(50vh - 100px);right: 10px;height: 200px;background-image: var(--buttonGradient);border-radius: 20px;height: 200px;width: 40px; box-shadow: 1px 2px 6px 2px black;">
+            <div class="volume_background" style="background-image: linear-gradient(180deg, var(--sbl), var(--sbd));border-radius: 20px;height: 90px;position: absolute;bottom: 0;width: 40px;"></div>
         </div>
     </div>
-
+    
     <audio id="audio" autoplay hidden>
         <source src="" type="audio/mpeg">
                    unsupported !! 
     </audio>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="/__/firebase/7.19.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="/__/firebase/7.19.1/firebase-auth.js"></script>
+    <script src="/__/firebase/7.19.1/firebase-database.js"></script>
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+    <script type="text/javascript" src="./firebase.js"></script>
     
 </body>
 </html>

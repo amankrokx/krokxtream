@@ -23,7 +23,7 @@ window.onload = () => {
 
     // Transition Function
     let blurdiv = document.querySelector('#fullblur')
-    toggleDiv = (what, hide, withblur) => {
+    toggleDiv = (what, hide) => {
         let div = document.querySelector(what.toString())
         if(hide || div.style.display !== 'none') {
             blurdiv.style.opacity = 0

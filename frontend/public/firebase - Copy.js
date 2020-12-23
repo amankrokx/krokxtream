@@ -1,72 +1,39 @@
 let me
-
-// Firebase Database
-var database = firebase.database();
-
-// Check Auth Before Proceeding
+    // Check Auth Before Proceeding
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         // User is signed in.
         console.log(user)
         me = user
-        let udata = readFrom('users/'+user.uid)
         if (!user.displayName) {
-            let name = askinput('Please provide your Name .')
-            let u = firebase.auth().currentUser;
-            
+            let name = askPrompt('Please provide your Name .')
+            var u = firebase.auth().currentUser;
+
             u.updateProfile({
                 displayName: name,
             }).then(function() {
-                firebase.database().ref('users/' + user.uid).set({displayName: name})
                 // Update successful.
-                document.querySelector('#settings span.name').innerHTML = user.displayName
+                document.querySelector('div.profile span.name').innerHTML = user.displayName
                 alert('Name Updated !')
             }).catch(function(error) {
                 alert('could not update name')
             });
-        } else document.querySelector('#settings span.name').innerHTML = user.displayName
-        
-        if(!user.photoURL) {
-            var u = firebase.auth().currentUser;
-            let path = './media/letters/'+user.displayName.slice(0,1).toUpperCase()+'.svg'
-            console.log(path)
-            u.updateProfile({
-                photoURL: path,
-            }).then(function() {
-                // Update successful.
-                firebase.database().ref('users/' + user.uid).set({photoURL: path})
-                document.querySelector('#settings img').src = path
-                console.log('photo updated')
-            }).catch(function(error) {
-                alert('could not update photo')
-            });
-        } else document.querySelector('#settings img').src = user.photoURL
-        
-        if (!udata) {
-            let tempdata = JSON.parse(JSON.stringify({
-                uid: user.uid,
-                name: user.displayName,
-                photoURL: user.photoURL,
-                emamil: user.emamil,
-                phone: user.phoneNumber
-            }, function(k, v) {
-                if (v === undefined) { return null; }
-                return v;
-             }))
-
-             firebase.database().ref('users/' + user.uid).set(tempdata).catch(error => {
-                console.log(error.message)
-            });
         }
+
+        if (user.photoURL) document.querySelector('div.profile img').src = user.photoURL
+        else document.querySelector('div.profile img').src = './media/profile.jpg'
+        document.querySelector('div.profile span.name').innerHTML = user.displayName
     } else {
         // User is signed out.
         console.log('not logged')
             //tell user to login
-        window.location = './login.html'
+        //window.location = './login.html'
     }
     hl()
 });
 
+// Firebase Database
+var database = firebase.database();
 
 // Write chats to DB
 // Write temprorary data and heavy data here, these message wont be persistant for much longer period.
@@ -132,7 +99,7 @@ let readFrom = (path) => {
 
 database.ref('chats/general').limitToLast(21).on('child_added', (data) => {
     let chunk = data.val()
-    appendmsg(chunk, data.key, 'general')
+    appendmsg(chunk, data.key)
 })
 
 // Lets capture history to get songs
@@ -143,4 +110,10 @@ database.ref('songs/general/history').orderByChild('status').startAt('true').on(
 
 function signout() {
     firebase.auth().signOut()
+}
+
+let askPrompt = (msg) => {
+    let n = prompt(msg)
+    if (n.length > 0) return n
+    return askPrompt(msg)
 }
