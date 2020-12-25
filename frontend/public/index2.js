@@ -133,25 +133,13 @@ window.onload = () => {
 
 // Fetch song ID from query with rapidapi
 let playQuery = (query) => {
-    fetch('https://youtube-v31.p.rapidapi.com/search?q=' + encodeURI(query) + '&part=snippet%2Cid&maxResults=1', {
-                "method": "GET",
-                "headers": {
-                    "x-rapidapi-key": "15be109401msh039dc334993a18cp1b9113jsn7f88dd5900bf",
-                    "x-rapidapi-host": "youtube-v31.p.rapidapi.com"
-                }
-            }).then(res => {
-                return res.json()
-            }).then(r => {
-                if (r.items.length > 0) {
-                    fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?vid=' + r.items[0].id.videoId)
+    fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?search=' + encodeURI(query))
                     .then(res => {
                         return res.json()
                     })
                     .then(song => {
                         writeTo(song, 'general', true)
                     })
-                }
-            })
 }
 
 // Validations and supporting functions
