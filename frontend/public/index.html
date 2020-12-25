@@ -2,6 +2,7 @@
 
 <head>
     <style>
+
         @keyframes ldio-gpbbhzzh67p {
             0% {
                 opacity: 1
@@ -26,97 +27,97 @@
         .ldio-gpbbhzzh67p div:nth-child(1) {
             transform: rotate(0deg);
             animation-delay: -2.2865853658536586s;
-            background: #ffffff;
+            background: #ff0000;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(2) {
             transform: rotate(22.5deg);
             animation-delay: -2.1341463414634148s;
-            background: #ffffff;
+            background: #ff0000;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(3) {
             transform: rotate(45deg);
             animation-delay: -1.981707317073171s;
-            background: #ffffff;
+            background: #ff0000;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(4) {
             transform: rotate(67.5deg);
             animation-delay: -1.829268292682927s;
-            background: #ffffff;
+            background: #ff0000;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(5) {
             transform: rotate(90deg);
             animation-delay: -1.676829268292683s;
-            background: #ffffff;
+            background: #00adff;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(6) {
             transform: rotate(112.5deg);
             animation-delay: -1.524390243902439s;
-            background: #ffffff;
+            background: #00adff;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(7) {
             transform: rotate(135deg);
             animation-delay: -1.3719512195121952s;
-            background: #ffffff;
+            background: #00adff;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(8) {
             transform: rotate(157.5deg);
             animation-delay: -1.2195121951219512s;
-            background: #ffffff;
+            background: #00adff;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(9) {
             transform: rotate(180deg);
             animation-delay: -1.0670731707317074s;
-            background: #ffffff;
+            background: #fbff00;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(10) {
             transform: rotate(202.5deg);
             animation-delay: -0.9146341463414634s;
-            background: #ffffff;
+            background: #fbff00;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(11) {
             transform: rotate(225deg);
             animation-delay: -0.7621951219512195s;
-            background: #ffffff;
+            background: #fbff00;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(12) {
             transform: rotate(247.5deg);
             animation-delay: -0.6097560975609756s;
-            background: #ffffff;
+            background: #fbff00;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(13) {
             transform: rotate(270deg);
             animation-delay: -0.4573170731707317s;
-            background: #ffffff;
+            background: #1cff00;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(14) {
             transform: rotate(292.5deg);
             animation-delay: -0.3048780487804878s;
-            background: #ffffff;
+            background: #1cff00;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(15) {
             transform: rotate(315deg);
             animation-delay: -0.1524390243902439s;
-            background: #ffffff;
+            background: #1cff00;
         }
         
         .ldio-gpbbhzzh67p div:nth-child(16) {
             transform: rotate(337.5deg);
             animation-delay: 0s;
-            background: #ffffff;
+            background: #1cff00;
         }
         
         .loadingio-spinner-spinner-h9242q2dhnj {
@@ -146,13 +147,141 @@
         }
         
         #loader {
-            background: rgba(0, 0, 0, 0.5);
             position: fixed;
             top: 0;
             left: 0;
             height: 100vh;
             width: 100vw;
             z-index: 4;
+            backdrop-filter: blur(3px) sepia() brightness(0.8);
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            scrollbar-width: none;
+        }
+
+        :root {
+            --pd: #4f3b78;
+            --pl: #927fbf;
+            --plr: #c4bbf0;
+            --bd: #5f85db;
+            --bl: #90b8f8;
+            --bld: #26282b;
+            --bll: #353941;
+            --bllr: #363b4e;
+            --sbl: #61bcd8;
+            --sbd: #4c4bf0;
+            --sbb: #1e2430;
+            --sbw: #b6cdee;
+            --sblg: #adbacc;
+            --sbt: #4374d9;
+            --sbsd: rgba(28, 33, 46 , 0.5);
+            --sbsl: rgba(182, 205, 238, 0.4);
+            --backgroundGradient: linear-gradient(0deg, #12151c, #272e40);
+            --gradient : linear-gradient(90deg, var(--sbl), var(--sbd));
+            --buttonGradient: linear-gradient(-45deg, #202432, #444a6c);
+            --buttonShadowMain: 1px 3px 9px 1px var(--sbds);
+        }
+
+        body {
+            background: var(--backgroundGradient);
+            color: #d6cff0;
+            min-height: 470px;
+            min-width: 376px;
+            overflow: scroll;
+            white-space: nowrap;
+            -moz-user-select: none;
+            /* Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer */
+            -webkit-user-select: none;
+        }
+
+        *:focus {
+            outline: none;
+        }
+
+        *::-webkit-scrollbar {
+            display: none;
+        }
+        .button {
+            padding: 8px;
+            margin-left: 5px;
+            margin-right: 5px;
+            border-radius: 50%;
+            background-image: var(--buttonGradient);
+            box-shadow: 1px 3px 9px 1px var(--sbsd), -1px -1px 9px -2px var(--sbsl);
+            transition: background 0.3s cubic-bezier(0.45, 0.29, 0.91, 0.63);
+        }
+
+        div.button {
+            padding: 0 0 0 10px;
+            margin: 5px 0 5px 0;
+            border-radius: 20px;
+            height: 40px;
+        }
+
+        span.button:hover {
+            background-position: 40px;
+        }
+
+        div.volume_abs, #fullblur, #settings {
+            transition: opacity 0.25s ease-in-out;
+        }
+
+        div.room {
+            margin: 0 15px 0 15px;
+        }
+
+        div.room div.chats {
+            overflow: auto;
+            position: absolute;
+            bottom: 250px;
+            max-height: calc(100vh - 370px);
+        }
+        div.room div.chats div.message { padding: 5px 10px 5px 10px;width: calc(100vw - 30px);}
+
+        #rooms div.room div.listners img {
+            height: 40px;
+            width: 40px;
+            vertical-align: middle;
+            margin-left: 10px;
+            border-radius: 50%;
+        }
+        #rooms div.room div.listners span {vertical-align: bottom;}
+
+        #rooms div.room div.chats img {
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+        div.noti {
+            font-size: 0.8em;
+            color: var(--sblg);
+        }
+        #rooms div.room div.chats span.name {
+            color: var(--sbt);
+            vertical-align: middle;
+        }
+        div.room div.chats div.message div {
+            width: auto;
+            display: inline-block;
+            max-width: 200px;
+            white-space: normal;
+            margin-left: 34px;
+        }
+
+        div.room div.listners {
+            padding: 0 15px 0 15px;
+            overflow-y: hidden;
+            height: 40px;
+            width: auto;
+            overflow-x: scroll;
+            white-space: nowrap;
         }
     </style>
     <script>
@@ -194,16 +323,15 @@
                 }
             });
     </script>
-    <link rel="stylesheet" href="./index.css" defer/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="./index.js"></script>
-    <link rel="manifest" href="./manifest.webmanifest" defer/>
+    <script src="./index.js" defer ></script>
     <link rel="stylesheet" href="./material-icons.css" defer/>
-    
+    <link rel="manifest" href="./manifest.webmanifest" defer/>
 </head>
 
 <body>
+
     <div id="loader">
         <div class="loadingio-spinner-spinner-h9242q2dhnj">
             <div class="ldio-gpbbhzzh67p">
@@ -226,83 +354,123 @@
             </div>
         </div>
     </div>
-    <div class="offlineBanner">
-        <center>
-            <h1 style="margin-top: calc(50vh - 39px);">You are Offline</h1>
-            <span>Check your device's Internet Connectivity.</span>
-        </center>
+    <div id="top" style="margin: 15px 15px 0 15px;">
+        <span class="material-icons button rooms" style="margin: 10px 10px 0 10px;">expand_more</span>
+        <span class="room_name" style="height: 40px;width: calc(100vw - 154px);display: inline-block;vertical-align: middle;text-align: center;">#general</span>
+        <span class="material-icons button settings" style="float: right;margin: 10px 10px 0 10px;" onclick="toggleDiv('#settings')">settings</span>
+        
     </div>
-    <header>
-        <span class="material-icons add-button">cloud_download</span>
-        <span onclick="window.location = './index2.html'" >new look</span>
-        <span class="material-icons" style="float: right;">person</span>
-    </header>
-    <div id="navsupport" style="position: fixed; top: 0; left: 0; z-index: 5; display: none;height: 100vh;width: 100vw;background: rgba(0, 0, 0, 0.3);"></div>
-    <nav class="sidenav" style="position: fixed; z-index: 6; top: 0; right: -230px; width: 230px; max-height: 75vh; background: linear-gradient(50deg, var(--d2), var(--d));">
-        <div class="profile" style="height: 80px; padding: 10px; border-bottom: 1px solid var(--w);">
-            <img src="#" style="height: 60px;width: 60px;border-radius: 5px;" />
-            <span class="name" style="position: relative;vertical-align: middle;top: -25px;margin-left: 10px;font-size: 1.1em;">amankrokx</span>
-            <span class="material-icons signout" onclick="signout()" style="position: absolute;top: 46px;right: 10px;">login</span>
-            <span class="material-icons edit" style="float: right;">edit</span>
-        </div>
-        <div class="themes" style="padding: 15px;">
-            <span>Themes</span>
-            <span class="material-icons colors" style="float: right;position: relative;top: -3px;">color_lens</span>
-            <div class="drop hidden" style="padding: 10px;">
-                <span style="float: left;">Sunset</span>
-                <span style="color: var(--d);">■</span>
-                <span style="color: var(--d2);">■</span>
-                <span style="color: var(--g);">■</span>
-                <span style="color: var(--l);">■</span>
-                <span style="color: var(--w);">■</span>
-                <span style="color: var(--b);">■</span>
-            </div>
-        </div>
-    </nav>
-
-    <div id="rooms">
-        <div class="room create">
-            <span>Create</span>
-            <center><span class="material-icons add_box" style="position: relative;font-size: 3em;display: table;top: calc((100vh - 314px)/2);opacity: 0.6 ;">add_box</span></center>
-        </div>
-        <div class="room general">
-            <span class="roomname">#general</span>
-            <div class="msgs">
-
-            </div>
-            <div class="reply">
-                <input type="text" placeholder="Youtube Search or Link here" />
-                <span class="material-icons send">send</span>
-                <!--<span class="material-icons chat">chat</span>
-                <span class="material-icons query">search</span>-->
-            </div>
-        </div>
-        <div class="room amankrokx private">
-            <span>#amankrokx's</span>
-        </div>
-    </div>
-
-
-    <div id="queue" style="height: 140px;">queue plus history</div>
-
-    <canvas id="output" height="100" width="380"></canvas>
     
-    <div id="player">
-        <span class="material-icons play" onclick="play()" style="display: inline-block;">play_arrow</span>
-        <span class="material-icons pause hidden" onclick="pause()" style="display: none;">pause</span>
-        <div style="position: absolute;bottom: 60px;left: 98px;overflow-x: auto;overflow-y: hidden;white-space: nowrap;width: 190px;">
-            <marquee><span class="title">Ghar Se Nikalte Hi Song | Amaal Mallik Feat. Armaan Malik | Bhushan Kumar | Angel</span></marquee><br>
-            <span class="author">T-Series</span>
-        </div>
-        <span class="material-icons download" style="display: none;">save_alt</span>
-        <input class="volume" orient="vertical" type="range" step="1" value="10" min="1" max="10">
-        <audio id="audio" autoplay hidden>
-            <source src="#" type="audio/webm">
-                       unsupported !! 
-           </audio>
+    <div id="settings" onblur="toggleDiv('#settings', true)" style="opacity: 0;display: none;position: fixed;z-index: 4;height: calc(100vh - 300px);width: 80vw;left: 10vw;top: 150px;background-image: var(--buttonGradient);padding: 15px;border-radius: 20px;box-shadow: 2px 5px 9px 0 black;" tabindex="-1">
+            <img src="./media/aman.jpg" style="height: 60px;width: 60px;vertical-align: middle;border-radius: 50%;">
+            <span class="name" style="vertical-align: middle;margin-left: 10px;font-size: 1.2em;">Aman Kumar</span>
+            <span class="material-icons button edit" style="float: right;margin-top: 10px;">edit</span>
+            <div class="signout button" onclick="signout()" style="background-image: var(--buttonGradient);/* border-radius: 20px; */">
+                <span style="position: relative;top: 10px;">LogOut</span>
+                <span class="material-icons button logout" style="float: right;">login</span>
+            </div>
+    </div>
+        
+    <div id="fullblur" style="position: fixed; top: 0; left: 0;height: 100vh;width: 100vw;opacity: 0;display: none;backdrop-filter: blur(5px);z-index: 2;" ></div>
 
+    <div id="playlist" onblur="toggleDiv('#playlist', true)" tabindex="-1" style="position: fixed;z-index: 3;height: 400px;width: 80vw;left: 10vw;bottom: 230px;backdrop-filter: blur(5px);padding: 15px;border-radius: 20px;box-shadow: black 2px 5px 9px 0px;opacity: 0;display: none;">
+        History
     </div>
 
+    <div id="rooms">    
+        <div class="room general">
+            <div class="listners" >
+                <span class="material-icons button queue" >person_add_alt_1</span>
+                <img src="./media/aman.jpg"><img src="./media/letters/D.svg"><img src="./media/letters/K.svg"><img src="./media/letters/N.svg"><img src="./media/letters/H.svg"><img src="./media/letters/A.svg"><img src="./media/letters/D.svg"><img src="./media/letters/K.svg"><img src="./media/letters/N.svg"><img src="./media/letters/H.svg">
+            </div>
+            <div class="chats">
+                <div class="message" id="-MObLEcGAjhyQjrHXB1L">
+                    <img src="./media/letters/A.svg">
+                    <span class="name" id="xn1QYOZjugfgnhjyfgqrJP1Y7TCz3PCn1">Ankur</span> 
+                    <br />
+                    <div class="data">Abey Gaana baja jaldi</div>
+                </div>
+                <div class="message" id="-MObLEcGArEoQjrHXB1L">
+                    <img src="./media/aman.jpg">
+                    <span class="name" id="xn1QYOZjugYJKqrJP1Y7TCz3PCn1">Aman</span> 
+                    <br />
+                    <div class="data">Bs kuch din aur wait kr le</div>
+                </div>
+                <div class="message" id="-MObLEcGArEoQjrfh">
+                    <img src="./media/letters/A.svg">
+                    <span class="name" id="xn1QYOZjugjhbdfgJP1Y7TCz3PCn1">Ankur</span> 
+                    <br />
+                    <div class="data">Kitna wait kare, daily bolta hai kl kl</div>
+                </div>
+                <div class="message" id="-MObLEcGArEojehrv1L">
+                    <img src="./media/aman.jpg">
+                    <span class="name" id="xn1QYOZjugkjerhv1Y7TCz3PCn1">Aman</span> 
+                    <br />
+                    <div class="data">Kal ke baad aane wala kal pakka</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="reply" style="position: fixed;bottom: 205px;left: 0;height: 40px;padding: 0 25px 0 25px;">
+        <input type="text" placeholder="Say Something..." style="border: 0;height: 40px;vertical-align: bottom;width: calc(100vw - 90px);border-radius: 20px;padding: 8px;background: rgba(0,0,0,0.4);color: var(--sbw);">
+        <span class="material-icons button reply" onclick="sendMessage()" style="transform: rotate(90deg);">reply</span>
+    </div>
+
+    <div id="art_container" style="position: fixed; z-index: -1;width: 100vw;height: calc(100vh - 280px); top: 70px;">
+        <span style="display: inline-block;height: 100%;vertical-align: middle;"></span><img src="media/albumart.jpg" style="width: inherit;vertical-align: middle;filter: blur(4px) brightness(0.5);">
+    </div>
+
+
+    <div id="player" style="background-image: var(--buttonGradient);position: fixed; width: calc(100vw - 30px); bottom: 0;left: 0;padding-top: 5px;margin: 0 15px 8px 15px;border-radius: 20px;">
+        <div style="height: 64px;">
+            <div style="display: inline-block; height: inherit; padding: 15px;">
+                <b><span class="title" style="text-shadow: 2px 1px 3px var(--sbsd), -2px -1px 3px var(--sbsl);">Enemy</span></b><br>
+                <span class="artist">Zack Knight</span> - <span class="addedby" style="color: var(--sbt);">amankrokx</span>
+            </div>
+        <div class="playlist" style="display: inline-block; padding: 10px; position: absolute; right: 0; height: inherit;">
+            <span class="material-icons button play" onclick="audio.play()">play_arrow</span>
+            <span class="material-icons button pause" style="display: none;" onclick="audio.pause()">pause</span>
+            <span class="material-icons button queue" onclick="toggleDiv('#playlist')">queue_music</span>
+        </div>
+        </div>
+
+        <div class="controls" style="padding: 0 10px 0 10px;">
+            <div class="bar" style="padding: 5px 5px 10px 5px;">
+                <div class="progresscontainer" style="background-image: var(--buttonGradient);border-radius: 2.5px;">
+                    <div class="progress" style="height: 5px;background-image: linear-gradient(-90deg, var(--sbl), var(--sbd));width: 40%;position: relative;border-radius: 2.5px;"></div>
+                </div>
+                <span class="time" style="float: left; color: var(--sbl);font-size: 0.8em;padding: 4px;">1.11</span>
+                <span class="length" style="float: right;font-size: 0.8em;padding: 4px;">3.55</span>
+            </div>
+            <center>
+                <div class="buttons" style="margin: 15px;background: var(--gradient);padding: 10px;border-radius: 20px;">
+
+                    <span class="material-icons button playlist-add">music_video</span>
+                    <span class="material-icons button playlist-add">playlist_add</span>
+                    <span class="material-icons button favourite" style="color: #cc2828;padding: 12px; background-image: var(--gradient);">favorite</span>
+                    <span class="material-icons button playlist-add">skip_next</span>
+                    <span class="material-icons button" onclick="toggleDiv('div.volume_abs')">volume_up</span>
+                </div>
+            </center>
+        </div>
+    </div>
+    
+    <div class="volume_abs" style="opacity: 0;display: none;" tabindex="0" onblur="toggleDiv('div.volume_abs',false)">
+        <div class="volume" style="z-index: 5; position: fixed;top: calc(50vh - 100px);right: 10px;height: 200px;border-radius: 20px;">
+            <span class="material-icons button volume_up" style="margin: 0;">volume_up</span>
+            <span class="material-icons button volume_down" style="position: absolute;bottom: 50px;left: 0;margin: 0;" draggable="true">volume_down</span>
+            <span class="material-icons button mute" style="margin-top: 10px;position: absolute;bottom: 0;left: 0;margin: 0;">volume_mute</span>
+        </div>
+        <div class="volume_container" style="z-index: 4;position: fixed;top: calc(50vh - 100px);right: 10px;height: 200px;background-image: var(--buttonGradient);border-radius: 20px;height: 200px;width: 40px; box-shadow: 1px 2px 6px 2px black;">
+            <div class="volume_background" style="background-image: linear-gradient(180deg, var(--sbl), var(--sbd));border-radius: 20px;height: 90px;position: absolute;bottom: 0;width: 40px;"></div>
+        </div>
+    </div>
+    
+    <audio id="audio" autoplay hidden>
+        <source src="" type="audio/mpeg">
+                   unsupported !! 
+    </audio>
 
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="/__/firebase/7.19.1/firebase-app.js"></script>
@@ -313,7 +481,6 @@
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
     <script type="text/javascript" src="./firebase.js"></script>
-
+    
 </body>
-
 </html>

@@ -1,0 +1,319 @@
+<html lang="en">
+
+<head>
+    <style>
+        @keyframes ldio-gpbbhzzh67p {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0
+            }
+        }
+        
+        .ldio-gpbbhzzh67p div {
+            left: 47.5px;
+            top: 27.5px;
+            position: absolute;
+            animation: ldio-gpbbhzzh67p linear 2.4390243902439024s infinite;
+            background: #ffffff;
+            width: 5px;
+            height: 5px;
+            border-radius: 1.1500000000000001px / 1.1500000000000001px;
+            transform-origin: 2.5px 22.5px;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(1) {
+            transform: rotate(0deg);
+            animation-delay: -2.2865853658536586s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(2) {
+            transform: rotate(22.5deg);
+            animation-delay: -2.1341463414634148s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(3) {
+            transform: rotate(45deg);
+            animation-delay: -1.981707317073171s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(4) {
+            transform: rotate(67.5deg);
+            animation-delay: -1.829268292682927s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(5) {
+            transform: rotate(90deg);
+            animation-delay: -1.676829268292683s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(6) {
+            transform: rotate(112.5deg);
+            animation-delay: -1.524390243902439s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(7) {
+            transform: rotate(135deg);
+            animation-delay: -1.3719512195121952s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(8) {
+            transform: rotate(157.5deg);
+            animation-delay: -1.2195121951219512s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(9) {
+            transform: rotate(180deg);
+            animation-delay: -1.0670731707317074s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(10) {
+            transform: rotate(202.5deg);
+            animation-delay: -0.9146341463414634s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(11) {
+            transform: rotate(225deg);
+            animation-delay: -0.7621951219512195s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(12) {
+            transform: rotate(247.5deg);
+            animation-delay: -0.6097560975609756s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(13) {
+            transform: rotate(270deg);
+            animation-delay: -0.4573170731707317s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(14) {
+            transform: rotate(292.5deg);
+            animation-delay: -0.3048780487804878s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(15) {
+            transform: rotate(315deg);
+            animation-delay: -0.1524390243902439s;
+            background: #ffffff;
+        }
+        
+        .ldio-gpbbhzzh67p div:nth-child(16) {
+            transform: rotate(337.5deg);
+            animation-delay: 0s;
+            background: #ffffff;
+        }
+        
+        .loadingio-spinner-spinner-h9242q2dhnj {
+            width: 100px;
+            height: 100px;
+            display: inline-block;
+            overflow: hidden;
+            background: none;
+            position: fixed;
+            top: calc((100vh - 100px)/2);
+            left: calc((100vw - 100px)/2);
+            z-index: 5;
+        }
+        
+        .ldio-gpbbhzzh67p {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform: translateZ(0) scale(1);
+            backface-visibility: hidden;
+            transform-origin: 0 0;
+            /* see note above */
+        }
+        
+        .ldio-gpbbhzzh67p div {
+            box-sizing: content-box;
+        }
+        
+        #loader {
+            background: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            z-index: 4;
+        }
+    </style>
+    <script>
+        // make the whole serviceworker process into a promise so later on we can
+        // listen to it and in case new content is available a toast will be shown
+        window.isUpdateAvailable = new Promise(function(resolve, reject) {
+            // lazy way of disabling service workers while developing
+            if ('serviceWorker' in navigator && ['localhost', '127'].indexOf(location.hostname) === -1) {
+                // register service worker file
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => {
+                        reg.onupdatefound = () => {
+                            const installingWorker = reg.installing;
+                            installingWorker.onstatechange = () => {
+                                switch (installingWorker.state) {
+                                    case 'installed':
+                                        if (navigator.serviceWorker.controller) {
+                                            // new update available
+                                            resolve(true);
+                                        } else {
+                                            // no update available
+                                            resolve(false);
+                                        }
+                                        break;
+                                }
+                            };
+                        };
+                    })
+                    .catch(err => console.error('[SW ERROR]', err));
+            }
+        });
+
+        window['isUpdateAvailable']
+            .then(isAvailable => {
+                if (isAvailable) {
+                    if (confirm('New Update available! Reload the webapp to see the latest juicy changes.')) {
+                        window.location.reload()
+                    }
+                }
+            });
+    </script>
+    <link rel="stylesheet" href="./index.css" defer/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="./index.js"></script>
+    <link rel="manifest" href="./manifest.webmanifest" defer/>
+    <link rel="stylesheet" href="./material-icons.css" defer/>
+    
+</head>
+
+<body>
+    <div id="loader">
+        <div class="loadingio-spinner-spinner-h9242q2dhnj">
+            <div class="ldio-gpbbhzzh67p">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+    <div class="offlineBanner">
+        <center>
+            <h1 style="margin-top: calc(50vh - 39px);">You are Offline</h1>
+            <span>Check your device's Internet Connectivity.</span>
+        </center>
+    </div>
+    <header>
+        <span class="material-icons add-button">cloud_download</span>
+        <span onclick="window.location = './index2.html'" >new look</span>
+        <span class="material-icons" style="float: right;">person</span>
+    </header>
+    <div id="navsupport" style="position: fixed; top: 0; left: 0; z-index: 5; display: none;height: 100vh;width: 100vw;background: rgba(0, 0, 0, 0.3);"></div>
+    <nav class="sidenav" style="position: fixed; z-index: 6; top: 0; right: -230px; width: 230px; max-height: 75vh; background: linear-gradient(50deg, var(--d2), var(--d));">
+        <div class="profile" style="height: 80px; padding: 10px; border-bottom: 1px solid var(--w);">
+            <img src="#" style="height: 60px;width: 60px;border-radius: 5px;" />
+            <span class="name" style="position: relative;vertical-align: middle;top: -25px;margin-left: 10px;font-size: 1.1em;">amankrokx</span>
+            <span class="material-icons signout" onclick="signout()" style="position: absolute;top: 46px;right: 10px;">login</span>
+            <span class="material-icons edit" style="float: right;">edit</span>
+        </div>
+        <div class="themes" style="padding: 15px;">
+            <span>Themes</span>
+            <span class="material-icons colors" style="float: right;position: relative;top: -3px;">color_lens</span>
+            <div class="drop hidden" style="padding: 10px;">
+                <span style="float: left;">Sunset</span>
+                <span style="color: var(--d);">■</span>
+                <span style="color: var(--d2);">■</span>
+                <span style="color: var(--g);">■</span>
+                <span style="color: var(--l);">■</span>
+                <span style="color: var(--w);">■</span>
+                <span style="color: var(--b);">■</span>
+            </div>
+        </div>
+    </nav>
+
+    <div id="rooms">
+        <div class="room create">
+            <span>Create</span>
+            <center><span class="material-icons add_box" style="position: relative;font-size: 3em;display: table;top: calc((100vh - 314px)/2);opacity: 0.6 ;">add_box</span></center>
+        </div>
+        <div class="room general">
+            <span class="roomname">#general</span>
+            <div class="msgs">
+
+            </div>
+            <div class="reply">
+                <input type="text" placeholder="Youtube Search or Link here" />
+                <span class="material-icons send">send</span>
+                <!--<span class="material-icons chat">chat</span>
+                <span class="material-icons query">search</span>-->
+            </div>
+        </div>
+        <div class="room amankrokx private">
+            <span>#amankrokx's</span>
+        </div>
+    </div>
+
+
+    <div id="queue" style="height: 140px;">queue plus history</div>
+
+    <canvas id="output" height="100" width="380"></canvas>
+    
+    <div id="player">
+        <span class="material-icons play" onclick="play()" style="display: inline-block;">play_arrow</span>
+        <span class="material-icons pause hidden" onclick="pause()" style="display: none;">pause</span>
+        <div style="position: absolute;bottom: 60px;left: 98px;overflow-x: auto;overflow-y: hidden;white-space: nowrap;width: 190px;">
+            <marquee><span class="title">Ghar Se Nikalte Hi Song | Amaal Mallik Feat. Armaan Malik | Bhushan Kumar | Angel</span></marquee><br>
+            <span class="author">T-Series</span>
+        </div>
+        <span class="material-icons download" style="display: none;">save_alt</span>
+        <input class="volume" orient="vertical" type="range" step="1" value="10" min="1" max="10">
+        <audio id="audio" autoplay hidden>
+            <source src="#" type="audio/webm">
+                       unsupported !! 
+           </audio>
+
+    </div>
+
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="/__/firebase/7.19.1/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="/__/firebase/7.19.1/firebase-auth.js"></script>
+    <script src="/__/firebase/7.19.1/firebase-database.js"></script>
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+    <script type="text/javascript" src="./firebase.js"></script>
+
+</body>
+
+</html>
