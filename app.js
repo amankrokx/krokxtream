@@ -18,11 +18,11 @@ let getdata = async(viaID, param) => {
     return new Promise(async function(resolve, reject) {
         try {
             if(!viaID) {
-                const isValid = ytdl.validateID(req.query.vid)
+                const isValid = ytdl.validateID(param)
                 console.log(isValid)
                 if (!isValid) {
                     res.json({ 'error': 'invalid_link' })
-                    return
+                    throw 'vidError'
                 }
             }
     
@@ -52,11 +52,9 @@ let getdata = async(viaID, param) => {
 
 // Main function handle for API calls
 app.get('/getAudioUrl', async(req, res) => {
-    console.log(req.query.search)
     try {
         if (req.query.search && req.query.search.length > 0) {
             yts.GetListByKeyword(decodeURI(req.query.search)).then(data => {
-                console.log(data)
                 getdata(true, data.items[0].id).then(data => {
                     res.json(data)
                 }).catch(error => {throw error})
