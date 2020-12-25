@@ -131,7 +131,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="./index2.js" defer ></script>
-    <script src="./ui.js" defer ></script>
     <link rel="stylesheet" href="./material-icons.css" defer/>
     <link rel="manifest" href="./manifest.webmanifest" defer/>
 </head>
@@ -141,9 +140,9 @@
         <span class="material-icons button rooms" style="margin: 10px 10px 0 10px;">expand_more</span>
         <span class="room_name" style="height: 40px;width: calc(100vw - 154px);display: inline-block;vertical-align: middle;text-align: center;">#general</span>
         <span class="material-icons button settings" style="float: right;margin: 10px 10px 0 10px;" onclick="toggleDiv('#settings')">settings</span>
-    
+        
     </div>
-
+    
     <div id="settings" onblur="toggleDiv('#settings', true)" style="opacity: 0;display: none;position: fixed;z-index: 4;height: calc(100vh - 300px);width: 80vw;left: 10vw;top: 150px;background-image: var(--buttonGradient);padding: 15px;border-radius: 20px;box-shadow: 2px 5px 9px 0 black;" tabindex="-1">
             <img src="./media/aman.jpg" style="height: 60px;width: 60px;vertical-align: middle;border-radius: 50%;">
             <span class="name" style="vertical-align: middle;margin-left: 10px;font-size: 1.2em;">Aman Kumar</span>

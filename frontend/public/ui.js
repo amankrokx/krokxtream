@@ -1,14 +1,15 @@
-// All UI elements and transitions here
-//Global variables
 let volumediv, progressBar, audioSrc, audio, playBtn, pauseBtn, toggleDiv
 
+// All UI elements and transitions here
+//Global variables
 window.onload = () => {
-    volumediv = document.querySelector('div.volume_abs')
-    progressBar = document.querySelector('div.progress')
-    audio = document.querySelector('#audio')
-    audioSrc = document.querySelector('source')
-    playBtn = document.querySelector('span.play')
-    pauseBtn = document.querySelector('span.pause')
+    console.log('fron ui')
+    let volumediv = document.querySelector('div.volume_abs')
+    let progressBar = document.querySelector('div.progress')
+    let audio = document.querySelector('#audio')
+    let audioSrc = document.querySelector('source')
+    let playBtn = document.querySelector('span.play')
+    let pauseBtn = document.querySelector('span.pause')
 
     // Audio events
     audio.onplay = () => {
