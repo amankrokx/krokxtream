@@ -1,12 +1,14 @@
- // version development 1.8.1
+ // version development 1.8.9
+ // ALMOST WROKING
  self.addEventListener('install', function(e) {
      e.waitUntil(
          caches.open('fox-store').then(function(cache) {
              return cache.addAll([
                  './index.html',
-                 './index.css',
                  './index.js',
                  './icon-512.png',
+                 './media/albumart.jpg',
+                 './media/aman.jpg',
                  './icon-256.png',
                  './icon-128.png',
                  './material-icons.css',
