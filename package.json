@@ -6,6 +6,7 @@
     "dependencies": {
         "cors": "^2.8.5",
         "express": "^4.17.1",
+        "youtube-search-api": "^1.0.5",
         "ytdl-core": "^4.1.4"
     },
     "devDependencies": {},
