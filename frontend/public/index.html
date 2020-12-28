@@ -283,6 +283,14 @@
             overflow-x: scroll;
             white-space: nowrap;
         }
+
+        #playlist div.headings span {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 15px;
+        }
+
+        div.queue div div.title {overflow-x: scroll;display: inline-block;width: calc(100vw - 160px);margin-right: 10px;vertical-align: bottom;margin-top: 10px;}
     </style>
     <script>
         // make the whole serviceworker process into a promise so later on we can
@@ -373,8 +381,20 @@
         
     <div id="fullblur" style="position: fixed; top: 0; left: 0;height: 100vh;width: 100vw;opacity: 0;display: none;backdrop-filter: blur(5px);z-index: 2;" ></div>
 
-    <div id="playlist" onblur="toggleDiv('#playlist', true)" tabindex="-1" style="position: fixed;z-index: 3;height: 400px;width: 80vw;left: 10vw;bottom: 230px;backdrop-filter: blur(5px);padding: 15px;border-radius: 20px;box-shadow: black 2px 5px 9px 0px;opacity: 0;display: none;">
-        History
+    <div id="playlist" onblur="toggleDiv('#playlist', true)" tabindex="-1" style="position: fixed;z-index: 3;height: 400px;width: 80vw;left: 10vw;bottom: 230px;backdrop-filter: blur(5px);padding: 15px;border-radius: 20px;box-shadow: black 2px 5px 9px 0px;opacity: 1;">
+        <div class="headings" style="overflow-y: hidden;overflow-x: scroll;">
+            <span>Queue</span>
+            <span>Related</span>
+            <span>Queue</span>
+            <span>Queue</span>
+            <span>Queue</span>
+            <span>Queue</span>
+            <span>Queue</span>
+            <span>History</span>
+            <span>Playlist</span>
+        </div>    
+        <div class="queue">
+        </div>
     </div>
 
     <div id="rooms">    

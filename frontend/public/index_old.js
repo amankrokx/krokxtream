@@ -1,6 +1,6 @@
 // Super Global variables
 
-let play, pause, myname, playQuery, lastSong, hl, sl, appendmsg, playSong
+let play, pause, myname, playQuery, lastSong, hl, sl, appendmsg, playSong, appendQueue
 window.onload = () => {
     // Loader is the fitrst thing to work
     const tl = document.getElementById('loader')
@@ -309,11 +309,13 @@ window.onload = () => {
     }
 
     appendmsg = (msg, key) => {
-        if(msg.song) {msgContainer.innerHTML += `<span class="commands"><b>Playing Song :</b><p style="text-align: center;"><i>${msg.data.title}</i></p></span>`}
+        if(msg.song) {msgContainer.innerHTML += `<span class="commands" id="${key}" ><b>Playing Song :</b><p style="text-align: center;"><i>${msg.data.title}</i></p></span>`}
         else {
             if (msg.from.uid == me.uid) msgContainer.innerHTML += `<span id="${key}" class="mine chat">${msg.data}</span>`
             else msgContainer.innerHTML += `<span id="${key}" class="chat">${msg.data}</span>`
         }
         msgContainer.scrollTop = msgContainer.scrollHeight
     }
+
+    
 }

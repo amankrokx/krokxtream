@@ -1,4 +1,4 @@
-let me
+let me, queue
 
 // Firebase Database
 var database = firebase.database();
@@ -136,9 +136,15 @@ database.ref('chats/general').limitToLast(21).on('child_added', (data) => {
 })
 
 // Lets capture history to get songs
-database.ref('songs/general/history').orderByChild('status').startAt('true').on('child_added', (data) => {
+
+database.ref('songs/general/history').orderByChild('status').startAt('queued').on('child_added', (data) => {
     let chunk = data.val()
-    console.log([chunk, data.key])
+    appendQueue(chunk, data.key)
+})
+
+database.ref('command/general/play').on('child_added', (data) => {
+    let song = readFrom('chats/general/'+data.val())
+    playSong(song.data, song.from)
 })
 
 function signout() {

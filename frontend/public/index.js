@@ -1,4 +1,4 @@
-let askinput, appendmsg, sendMessage, currentGroup = 'general',  progressBar, audioSrc, audio, hl, sl
+let askinput, appendmsg, sendMessage, currentGroup = 'general',  progressBar, audioSrc, audio, hl, sl, appendQueue
 
 window.onload = () => {
     console.log('fron index2')
@@ -10,9 +10,9 @@ window.onload = () => {
     }
 
     // Append messages globally
+    let ref = document.querySelector('#rooms div.general div.chats')
     appendmsg = (data, key, group) => {
         if (group == 'general') { // for few days
-            let ref = document.querySelector('#rooms div.general div.chats')
             let photo = readFrom('users/'+data.from.uid+'/photoUrl')
             if(!photo) photo = './media/letters/'+data.from.name.slice(0,1).toUpperCase()+'.svg'
             if (data.song) {
@@ -25,6 +25,11 @@ window.onload = () => {
             ref.scrollTop = ref.scrollHeight
 
         }
+    }
+
+    let queueRef = document.querySelector('#playlist div.queue')
+    appendQueue = (data, key) => {
+        queueRef.innerHTML += `<div id="${key}"><div class="title">${data.title}</div><span>${data.length} s</span></div>`
     }
 
     // Listen for share-target-api
@@ -137,6 +142,84 @@ window.onload = () => {
     }
     sl = () => {
         document.querySelector('#loader').style.display = "none"
+    }
+
+    let updatePositionState = () => {
+        if ('setPositionState' in navigator.mediaSession) {
+            console.log('Updating position state...')
+            navigator.mediaSession.setPositionState({
+                duration: audio.duration,
+                playbackRate: audio.playbackRate,
+                position: audio.currentTime
+            })
+        }
+    }
+
+    // Play song
+    playSong = (song, from) => {
+        if(!song.artist) song.artist = null
+        if(!song.album) song.album = null
+        audioSrc = song.audioUrl
+        document.querySelector('#player div div b span.title').innerHTML = song.title
+        document.querySelector('#player div div span.artist').innerHTML = song.artist
+        document.querySelector('#player div div span.addedby').innerHTML = from.name
+        audio.load()
+        if ('mediaSession' in navigator) {
+            let albumart = []
+            song.thumbnail.thumbnails.forEach(e => {
+                albumart.push({
+                    src: e.url,
+                    sizes: e.height + 'x' + e.width,
+                    type: 'image/jpeg'
+                })
+            });
+
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: song.title,
+                artist: song.artist,
+                album: song.album,
+                artwork: albumart
+            });
+            navigator.mediaSession.setActionHandler('play', function() {
+                audio.play()
+            });
+            navigator.mediaSession.setActionHandler('pause', function() {
+                audio.pause()
+            });
+            navigator.mediaSession.setActionHandler('previoustrack', function() {
+                
+            });
+            navigator.mediaSession.setActionHandler('nexttrack', function() {
+                
+            });
+            navigator.mediaSession.setActionHandler('seekbackward', function(event) {
+                log('> User clicked "Seek Backward" icon.')
+                const skipTime = event.seekOffset || 10
+                audio.currentTime = Math.max(audio.currentTime - skipTime, 0)
+                updatePositionState()
+            })
+            navigator.mediaSession.setActionHandler('seekforward', function(event) {
+                log('> User clicked "Seek Forward" icon.')
+                const skipTime = event.seekOffset || 10
+                audio.currentTime = Math.min(audio.currentTime + skipTime, audio.duration)
+                updatePositionState()
+            })
+            try {
+                navigator.mediaSession.setActionHandler('seekto', function(event) {
+                    log('> User clicked "Seek To" icon.')
+                    if (event.fastSeek && ('fastSeek' in audio)) {
+                        audio.fastSeek(event.seekTime)
+                        return;
+                    }
+                    audio.currentTime = event.seekTime
+                    updatePositionState()
+                });
+            } catch (error) {
+                log('Warning! The "seekto" media session action is not supported.')
+            }
+        }
+        audio.play()
+        updatePositionState
     }
 }
 
