@@ -37,7 +37,7 @@ database.ref('songs/general/history').orderByChild('status').startAt('queued').o
 database.ref('command/general/client').on('child_added', (data) => { 
     if((data.val() == 'pause') && playing) {
         queuetimer.pause()
-    } else if ((data.val() == 'continue') && queue.length > 0 && !playing && queuetimer) {
+    } else if ((data.val() == 'resume') && queue.length > 0 && !playing && queuetimer) {
         queuetimer.resume()
     }
 })
