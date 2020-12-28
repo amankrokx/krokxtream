@@ -121,6 +121,10 @@ let writeTo = (data, group, music) => {
     }
 }
 
+let writeCustom = (data) => {
+    database.ref('command/general/client').update(data)
+}
+
 let readFrom = (path) => {
     database.ref(path).once('value').then((snapshot) => {
         return snapshot.val()

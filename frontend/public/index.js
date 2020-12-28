@@ -1,4 +1,4 @@
-let askinput, appendmsg, sendMessage, currentGroup = 'general',  progressBar, audioSrc, audio, hl, sl, appendQueue
+let askinput, appendmsg, sendMessage, currentGroup = 'general',  progressBar, audioSrc, audio, hl, sl, appendQueue, playSong
 
 window.onload = () => {
     console.log('fron index2')
@@ -62,6 +62,14 @@ window.onload = () => {
             }
             else if (query.startsWith("!play ")) {
                 playQuery(query.split('!play ')[1])
+                return
+            }
+            else if (query.startsWith("!pause")) {
+                writeCustom('pause')
+                return
+            }
+            else if (query.startsWith("!resume")) {
+                writeCustom('resume')
                 return
             }
         }
