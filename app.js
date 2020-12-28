@@ -2,17 +2,96 @@ const express = require('express')
 const cors = require('cors')
 const ytdl = require("ytdl-core")
 let yts = require('youtube-search-api');
+var firebase = require('firebase');
 
 const app = express()
-    // Configure express plugins...
+// Configure express plugins...
 app.use(cors())
 
+
+let queue = [], playing, queuetimer
+// Firebase config
+var firebaseConfig = {
+    apiKey: "AIzaSyBgwn_AX22AqAPOzE-RlQv_TrsANbPLbgE",
+    authDomain: "krokxtream.firebaseapp.com",
+    databaseURL: "https://krokxtream-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "krokxtream",
+    storageBucket: "krokxtream.appspot.com",
+    messagingSenderId: "351247452806",
+    appId: "1:351247452806:web:9cff31d9e54d000adc1f07"
+}
+
+firebase.initializeApp(firebaseConfig)
+
+let database = firebase.database();
+
+database.ref('songs/general/history').orderByChild('status').startAt('queued').on('child_added', (data) => { 
+    queue.push({key: data.key, value: data.val()})
+    console.log(`added song ${data.val().title} to queue`)
+    if(!playing) {
+        console.log('starting queue init')
+        runqueue()
+    }
+})
+
+database.ref('command/general/client').on('child_added', (data) => { 
+    if((data.val() == 'pause') && playing) {
+        queuetimer.pause()
+    } else if ((data.val() == 'continue') && queue.length > 0 && !playing && queuetimer) {
+        queuetimer.resume()
+    }
+})
+
+let runqueue = () => {
+    playing = true
+    console.log('set playing to true and play command at '+queue[0].value.chatRef)
+    database.ref('command/general').update({
+        'play': queue[0].value.chatRef
+    })
+    console.log(queue[0].key)
+    queuetimer = new Timer(() => {
+        database.ref('songs/general/history/'+queue[0].key).update({
+            'status': 'played'
+        })
+        console.log('set status of '+queue[0].key+ ' to played')
+
+        queue.shift()
+        if(queue.length > 0) {
+            console.log('next song')
+            runqueue()}
+        else{
+            console.log('list finished')
+            playing = false
+            database.ref('command/general').set({
+                'play': 'end'
+            }
+        )}
+    }, queue[0].value.length * 1000)
+}
 
 // Required functions...
 // Random ID generatore of length
 var idGen = function(len) {
     return Math.floor(Math.random() * Math.floor('9'.repeat(len)))
 }
+
+var Timer = function(callback, delay) {
+    var timerId, start, remaining = delay
+
+    this.pause = function() {
+        clearTimeout(timerId)
+        remaining -= Date.now() - start
+    }
+
+    this.resume = function() {
+        start = Date.now()
+        clearTimeout(timerId)
+        timerId = setTimeout(callback, remaining)
+    };
+
+    this.resume()
+}
+
 
 let getdata = async(viaID, param) => {
     return new Promise(async function(resolve, reject) {
