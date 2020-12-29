@@ -167,7 +167,7 @@ window.onload = () => {
     playSong = (song, from) => {
         if(!song.artist) song.artist = null
         if(!song.album) song.album = null
-        audioSrc = song.audioUrl
+        document.querySelector('source').src = song.audioUrl
         document.querySelector('#player div div b span.title').innerHTML = song.title
         document.querySelector('#player div div span.artist').innerHTML = song.artist
         document.querySelector('#player div div span.addedby').innerHTML = from.name
@@ -227,7 +227,7 @@ window.onload = () => {
             }
         }
         audio.play()
-        updatePositionState
+        updatePositionState()
     }
 }
 

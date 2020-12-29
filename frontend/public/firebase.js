@@ -99,6 +99,7 @@ let writeTo = (data, group, music) => {
             length: data.length,
             videoId: data.videoId,
             chatRef: key,
+            status: 'queued',
             from: { uid: me.uid, name: me.displayName },
             time: timestamp
         })
@@ -122,7 +123,15 @@ let writeTo = (data, group, music) => {
 }
 
 let writeCustom = (data) => {
-    database.ref('command/general/client').update(data)
+    database.ref('command/general').update({client: data})
+}
+
+let readFromAsync = async(path) => {
+    return new Promise(async function(resolve, reject) {
+        database.ref(path).once('value').then((snapshot) => {
+            resolve(snapshot.val())
+          })
+    })
 }
 
 let readFrom = (path) => {
@@ -130,7 +139,6 @@ let readFrom = (path) => {
         return snapshot.val()
       })
 }
-
 
 // Listen for chats in DB
 
@@ -146,9 +154,17 @@ database.ref('songs/general/history').orderByChild('status').startAt('queued').o
     appendQueue(chunk, data.key)
 })
 
-database.ref('command/general/play').on('child_added', (data) => {
-    let song = readFrom('chats/general/'+data.val())
-    playSong(song.data, song.from)
+database.ref('command/general/').on('value', async(data) => {
+    let r = data.val()
+    console.log(r)
+    if (r.play != 'end') {
+        readFromAsync('chats/general/'+r.play).then(song => {
+            console.log(song)
+        playSong(song.data, song.from)
+        })
+        
+
+    }
 })
 
 function signout() {
