@@ -34,7 +34,7 @@ database.ref('songs/general/history').orderByChild('status').startAt('queued').o
     }
 })
 
-database.ref('command/general/client').on('child_added', (data) => { 
+database.ref('command/general/client').on('child_changed', (data) => { 
     if((data.val() == 'pause') && playing) {
         queuetimer.pause()
     } else if ((data.val() == 'resume') && queue.length > 0 && !playing && queuetimer) {
