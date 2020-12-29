@@ -95,21 +95,41 @@ window.onload = () => {
 
 
     // All UI elements and transitions here
-    progressBar = document.querySelector('div.progress')
+    progressBar = document.querySelector('div.bar div.progresscontainer div.progress')
+    progressTime = document.querySelector('div.bar span.time')
     audio = document.querySelector('#audio')
     audioSrc = document.querySelector('source')
     let playBtn = document.querySelector('span.play')
     let pauseBtn = document.querySelector('span.pause')
 
     // Audio events
+    let lasttime = 0
+    let newtime = 0
     audio.onplay = () => {
         playBtn.style.display = "none"
         pauseBtn.style.display = "inline-block"
+        lasttime = 0
+        newtime = 0
+        document.querySelector('div.bar span.length').innerHTML = ((Math.floor(audio.duration/60)) +'.'+ (audio.duration % 60))
+        updatePositionState()
     }
 
     audio.onpause = () => {
         pauseBtn.style.display = "none"
         playBtn.style.display = "inline-block"
+    }
+
+    audio.onended = () => {
+        
+    }
+    audio.ontimeupdate  = () => {
+        newtime = Math.round(audio.currentTime)
+        if(newtime > lasttime) {
+            lasttime = newtime
+            progressTime.innerHTML = ((Math.floor(newtime/60)) +'.'+ (newtime % 60))
+            progressBar.style.width = (((newtime  / audio.duration)*100) + '%')
+
+        }
     }
 
     // Transition Function
@@ -168,6 +188,7 @@ window.onload = () => {
         if(!song.artist) song.artist = null
         if(!song.album) song.album = null
         document.querySelector('source').src = song.audioUrl
+        document.querySelector('#art_container img').src = song.thumbnail.thumbnails[song.thumbnail.thumbnails.length - 1].url
         document.querySelector('#player div div b span.title').innerHTML = song.title
         document.querySelector('#player div div span.artist').innerHTML = song.artist
         document.querySelector('#player div div span.addedby').innerHTML = from.name
@@ -227,7 +248,6 @@ window.onload = () => {
             }
         }
         audio.play()
-        updatePositionState()
     }
 }
 

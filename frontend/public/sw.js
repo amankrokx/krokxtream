@@ -1,5 +1,5 @@
- // version development 1.8.10
- // ALMOST WROKING yea
+ // version development 1.8.10fdg
+ // ALMOST WROKING yeafreger
  self.addEventListener('install', function(e) {
      e.waitUntil(
          caches.open('fox-store').then(function(cache) {
