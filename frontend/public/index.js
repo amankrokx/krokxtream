@@ -99,6 +99,9 @@ window.onload = () => {
     progressTime = document.querySelector('div.bar span.time')
     audio = document.querySelector('#audio')
     audioSrc = document.querySelector('source')
+    let rangeSlider = document.querySelector('#invisi_vol')
+    let vol_background = document.querySelector('div.volume_background')
+    let vol_button = document.querySelector('span.volume_down')
     let playBtn = document.querySelector('span.play')
     let pauseBtn = document.querySelector('span.pause')
 
@@ -134,7 +137,7 @@ window.onload = () => {
 
     // Transition Function
     let blurdiv = document.querySelector('#fullblur')
-    toggleDiv = (what, hide) => {
+    toggleDiv = (what, hide, focusThis) => {
         let div = document.querySelector(what.toString())
         if(hide || div.style.display !== 'none') {
             blurdiv.style.opacity = 0
@@ -152,6 +155,7 @@ window.onload = () => {
             }, 10)
             
             div.focus()
+            if (focusThis) document.querySelector(focusThis.toString()).focus()
         }
     }
 
@@ -170,6 +174,14 @@ window.onload = () => {
     }
     sl = () => {
         document.querySelector('#loader').style.display = "none"
+    }
+
+    let v_ratio
+    rangeSlider.onpointermove = () => {
+        v_ratio = rangeSlider.value/100
+        audio.volume = v_ratio
+        vol_background.style.height = ((v_ratio * 160) +40)
+        vol_button.style.bottom = v_ratio * 160
     }
 
     let updatePositionState = () => {

@@ -1,0 +1,2 @@
+youtube related api
+https://youtube.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=f1qz8vn3XbY&type=video&key=AIzaSyBgwn_AX22AqAPOzE-RlQv_TrsANbPLbgE
