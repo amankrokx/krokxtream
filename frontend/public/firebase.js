@@ -1,6 +1,6 @@
 let me, queue
 
-// Firebase Database
+// Firebase Database.
 var database = firebase.database();
 
 // Check Auth Before Proceeding
