@@ -6,9 +6,9 @@
     "dependencies": {
         "cors": "^2.8.5",
         "express": "^4.17.1",
-        "firebase": "^8.2.1",
-        "youtube-search-api": "^1.0.5",
-        "ytdl-core": "^4.2.1"
+        "firebase": "^8.6.2",
+        "youtube-search-api": "^1.0.10",
+        "ytdl-core": "^4.8.0"
     },
     "devDependencies": {},
     "scripts": {
