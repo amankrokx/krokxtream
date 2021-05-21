@@ -2,8 +2,10 @@ const express = require('express')
 const cors = require('cors')
 const ytdl = require("ytdl-core")
 let yts = require('youtube-search-api');
-var firebase = require('firebase');
+var firebase = require('firebase/app');
 
+require("firebase/auth");
+require("firebase/database");
 const app = express()
 // Configure express plugins...
 app.use(cors())
@@ -11,7 +13,7 @@ app.use(cors())
 
 let queue = [], playing, queuetimer
 // Firebase config
-var firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyBgwn_AX22AqAPOzE-RlQv_TrsANbPLbgE",
     authDomain: "krokxtream.firebaseapp.com",
     databaseURL: "https://krokxtream-default-rtdb.europe-west1.firebasedatabase.app",
@@ -19,7 +21,7 @@ var firebaseConfig = {
     storageBucket: "krokxtream.appspot.com",
     messagingSenderId: "351247452806",
     appId: "1:351247452806:web:9cff31d9e54d000adc1f07"
-}
+  };
 
 firebase.initializeApp(firebaseConfig)
 
@@ -36,8 +38,10 @@ database.ref('songs/general/history').orderByChild('status').startAt('queued').o
 
 database.ref('command/general/client').on('child_changed', (data) => { 
     if((data.val() == 'pause') && playing) {
+        console.log('a')
         queuetimer.pause()
     } else if ((data.val() == 'resume') && queue.length > 0 && !playing && queuetimer) {
+        console.log('b')
         queuetimer.resume()
     }
 })
