@@ -263,6 +263,12 @@ window.onload = () => {
     }
 }
 
+let doskip = () => {
+    writeCustom({'do':'skip'})
+    setTimeout(writeCustom({'do':'none'}), 300)
+    
+}
+
 // Fetch song ID from query with rapidapi
 let playQuery = (query) => {
     fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?search=' + encodeURI(query))
