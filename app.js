@@ -37,14 +37,38 @@ database.ref('songs/general/history').orderByChild('status').startAt('queued').o
 })
 
 database.ref('command/general/client').on('child_changed', (data) => { 
+    console.log(data.val())
     if((data.val() == 'pause') && playing) {
         console.log('a')
         queuetimer.pause()
     } else if ((data.val() == 'resume') && queue.length > 0 && !playing && queuetimer) {
         console.log('b')
         queuetimer.resume()
+    } else if (data.val() == 'skip' && playing && queuetimer) {
+        queuetimer.clear()
+        console.log('next song skipped this')
+        nextSong()
     }
 })
+
+let nextSong = () => {
+    database.ref('songs/general/history/'+queue[0].key).update({
+        'status': 'played'
+    })
+    console.log('set status of '+queue[0].key+ ' to played')
+
+    queue.shift()
+    if(queue.length > 0) {
+        console.log('next song')
+        runqueue()}
+    else{
+        console.log('list finished')
+        playing = false
+        database.ref('command/general').set({
+            'play': 'end'
+        }
+    )}
+}
 
 let runqueue = () => {
     playing = true
@@ -54,22 +78,7 @@ let runqueue = () => {
     })
     console.log(queue[0].key)
     queuetimer = new Timer(() => {
-        database.ref('songs/general/history/'+queue[0].key).update({
-            'status': 'played'
-        })
-        console.log('set status of '+queue[0].key+ ' to played')
-
-        queue.shift()
-        if(queue.length > 0) {
-            console.log('next song')
-            runqueue()}
-        else{
-            console.log('list finished')
-            playing = false
-            database.ref('command/general').set({
-                'play': 'end'
-            }
-        )}
+        nextSong()
     }, queue[0].value.length * 1000)
 }
 
@@ -92,8 +101,15 @@ var Timer = function(callback, delay) {
         clearTimeout(timerId)
         timerId = setTimeout(callback, remaining)
     };
+    
+    this.clear = function() {
+        
+        clearTimeout(timerId)
+    }
 
     this.resume()
+
+    
 }
 
 
