@@ -381,7 +381,7 @@
         
     <div id="fullblur" style="position: fixed; top: 0; left: 0;height: 100vh;width: 100vw;opacity: 0;display: none;backdrop-filter: blur(5px);z-index: 2;" ></div>
 
-    <div id="playlist" onblur="toggleDiv('#playlist', true)" tabindex="-1" style="position: fixed;z-index: 3;height: 400px;width: 80vw;left: 10vw;bottom: 230px;backdrop-filter: blur(5px);padding: 15px;border-radius: 20px;box-shadow: black 2px 5px 9px 0px;opacity: 1;">
+    <div id="playlist" onblur="toggleDiv('#playlist', true)" tabindex="-1" style="display: hidden; position: fixed;z-index: 3;height: 400px;width: 80vw;left: 10vw;bottom: 230px;backdrop-filter: blur(5px);padding: 15px;border-radius: 20px;box-shadow: black 2px 5px 9px 0px;opacity: 1;">
         <div class="headings" style="overflow-y: hidden;overflow-x: scroll;">
             <span>Queue</span>
             <span>Related</span>
@@ -469,7 +469,7 @@
                     <span class="material-icons button playlist-add">music_video</span>
                     <span class="material-icons button playlist-add">playlist_add</span>
                     <span class="material-icons button favourite" style="color: #cc2828;padding: 12px; background-image: var(--gradient);">favorite</span>
-                    <span class="material-icons button playlist-add">skip_next</span>
+                    <span class="material-icons button playlist-add" onclick="writeCustom({'do':'skip'})">skip_next</span>
                     <span class="material-icons button" onclick="toggleDiv('div.volume_abs', null, '#invisi_vol')">volume_up</span>
                 </div>
             </center>
