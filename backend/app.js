@@ -47,28 +47,8 @@ database.ref('command/general/client').on('child_changed', (data) => {
     } else if (data.val() == 'skip' && playing && queuetimer) {
         queuetimer.clear()
         console.log('next song skipped this')
-        nextSong()
     }
 })
-
-let nextSong = () => {
-    database.ref('songs/general/history/'+queue[0].key).update({
-        'status': 'played'
-    })
-    console.log('set status of '+queue[0].key+ ' to played')
-
-    queue.shift()
-    if(queue.length > 0) {
-        console.log('next song')
-        runqueue()}
-    else{
-        console.log('list finished')
-        playing = false
-        database.ref('command/general').set({
-            'play': 'end'
-        }
-    )}
-}
 
 let runqueue = () => {
     playing = true
@@ -78,7 +58,22 @@ let runqueue = () => {
     })
     console.log(queue[0].key)
     queuetimer = new Timer(() => {
-        nextSong()
+        database.ref('songs/general/history/'+queue[0].key).update({
+            'status': 'played'
+        })
+        console.log('set status of '+queue[0].key+ ' to played')
+    
+        queue.shift()
+        if(queue.length > 0) {
+            console.log('next song')
+            runqueue()}
+        else{
+            console.log('list finished')
+            playing = false
+            database.ref('command/general').set({
+                'play': 'end'
+            }
+        )}
     }, queue[0].value.length * 1000)
 }
 
