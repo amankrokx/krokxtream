@@ -3,6 +3,12 @@ let me, queue
 // Firebase Database.
 var database = firebase.database();
 
+let doskip = () => {
+    writeCustom({'do':'skip'})
+    setTimeout(writeCustom({'do':'none'}), 300)
+    
+}
+
 // Check Auth Before Proceeding
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {

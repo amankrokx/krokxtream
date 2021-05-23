@@ -263,11 +263,6 @@ window.onload = () => {
     }
 }
 
-let doskip = () => {
-    writeCustom({'do':'skip'})
-    setTimeout(writeCustom({'do':'none'}), 300)
-    
-}
 
 // Fetch song ID from query with rapidapi
 let playQuery = (query) => {
