@@ -3,12 +3,20 @@ const cors = require('cors')
 const ytdl = require("ytdl-core")
 let yts = require('youtube-search-api');
 var firebase = require('firebase/app');
+let proxy = require('express-http-proxy');
 
 require("firebase/auth");
 require("firebase/database");
 const app = express()
 // Configure express plugins...
 app.use(cors())
+ 
+app.use('/proxy', proxy(
+    req => req.query.host,
+    {
+     https: true,
+     proxyReqPathResolver: req => `${req.query.uri}&${process.env[`KEY_${req.query.provider.toUpperCase()}`]}`
+    }))
 
 
 let queue = [], playing, queuetimer
