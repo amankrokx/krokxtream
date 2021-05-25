@@ -78,7 +78,7 @@ window.onload = () => {
             let id = await extractID(query)
             if (id && id[1].length > 0) {
                 console.log(r[1])
-                fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?vid=' + r[1]).then(res => {
+                fetch('http://localhost:4001/getAudioUrl?vid=' + r[1]).then(res => {
                     return res.json()
                 }).then(song => {
                     writeTo(song, currentGroup, true)
@@ -125,6 +125,11 @@ window.onload = () => {
     audio.onended = () => {
         
     }
+
+    audio.onerror = function() {
+        console.log("Error " + videoElement.error.code + "; details: " + videoElement.error.message);
+    }
+
     audio.ontimeupdate  = () => {
         newtime = Math.round(audio.currentTime)
         if(newtime > lasttime) {
@@ -188,9 +193,9 @@ window.onload = () => {
         if ('setPositionState' in navigator.mediaSession) {
             console.log('Updating position state...')
             navigator.mediaSession.setPositionState({
-                duration: audio.duration,
+                duration: parseFloat(audio.duration),
                 playbackRate: audio.playbackRate,
-                position: audio.currentTime
+                position: parseFloat(audio.currentTime)
             })
         }
     }
@@ -200,14 +205,14 @@ window.onload = () => {
         if(!song.artist) song.artist = null
         if(!song.album) song.album = null
         document.querySelector('source').src = song.audioUrl
-        document.querySelector('#art_container img').src = song.thumbnail.thumbnails[song.thumbnail.thumbnails.length - 1].url
+        document.querySelector('#art_container img').src = song.thumbnail[song.thumbnail.length - 1].url
         document.querySelector('#player div div b span.title').innerHTML = song.title
         document.querySelector('#player div div span.artist').innerHTML = song.artist
         document.querySelector('#player div div span.addedby').innerHTML = from.name
         audio.load()
         if ('mediaSession' in navigator) {
             let albumart = []
-            song.thumbnail.thumbnails.forEach(e => {
+            song.thumbnail.forEach(e => {
                 albumart.push({
                     src: e.url,
                     sizes: e.height + 'x' + e.width,
@@ -266,7 +271,7 @@ window.onload = () => {
 
 // Fetch song ID from query with rapidapi
 let playQuery = (query) => {
-    fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?search=' + encodeURI(query))
+    fetch('http://localhost:4001/getAudioUrl?search=' + encodeURI(query))
                     .then(res => {
                         return res.json()
                     })
@@ -289,3 +294,4 @@ function validURL(str) {
 function extractID(url) {
     return url.match(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))([^#\&\?]*).*/)
 }
+

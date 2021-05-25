@@ -2,7 +2,9 @@
 
 <head>
     <style>
-
+        .material-icons {
+            color: white;
+        }
         @keyframes ldio-gpbbhzzh67p {
             0% {
                 opacity: 1
@@ -186,6 +188,21 @@
             --buttonShadowMain: 1px 3px 9px 1px var(--sbds);
         }
 
+        @keyframes rota {
+            0%   {transform:rotate(0deg)}
+            100% {transform: rotate(360deg);}
+        }
+
+        span.loadingA {
+            vertical-align: middle;
+            transform: rotate(0);
+            animation-name: rota;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        
+
         body {
             background: var(--backgroundGradient);
             color: #d6cff0;
@@ -216,6 +233,8 @@
             box-shadow: 1px 3px 9px 1px var(--sbsd), -1px -1px 9px -2px var(--sbsl);
             transition: background 0.3s cubic-bezier(0.45, 0.29, 0.91, 0.63);
         }
+
+        .hidden {display: none;}
 
         div.button {
             padding: 0 0 0 10px;
@@ -401,7 +420,7 @@
         <div class="room general">
             <div class="listners" >
                 <span class="material-icons button queue" >person_add_alt_1</span>
-                <img src="./media/aman.jpg"><img src="./media/letters/D.svg"><img src="./media/letters/K.svg"><img src="./media/letters/N.svg"><img src="./media/letters/H.svg"><img src="./media/letters/A.svg"><img src="./media/letters/D.svg"><img src="./media/letters/K.svg"><img src="./media/letters/N.svg"><img src="./media/letters/H.svg">
+                <img src="./media/aman.jpg"><img src="./media/pra.jpg"><img src="./media/sid.jpg"><img src="./media/lok.jpg"><img src="./media/letters/H.svg"><img src="./media/letters/A.svg"><img src="./media/letters/D.svg"><img src="./media/letters/K.svg"><img src="./media/letters/N.svg"><img src="./media/letters/H.svg">
             </div>
             <div class="chats">
                 <div class="message" id="-MObLEcGAjhyQjrHXB1L">
@@ -435,6 +454,11 @@
     <div id="reply" style="position: fixed;bottom: 205px;left: 0;height: 40px;padding: 0 25px 0 25px;">
         <input type="text" placeholder="Say Something..." style="border: 0;height: 40px;vertical-align: bottom;width: calc(100vw - 90px);border-radius: 20px;padding: 8px;background: rgba(0,0,0,0.4);color: var(--sbw);">
         <span class="material-icons button reply" onclick="sendMessage()" style="transform: rotate(90deg);">reply</span>
+    </div>
+
+    <div id="loadingAudio" class="hidden" style="backdrop-filter: blur(4px);z-index: 5; position: fixed;bottom: 245px;right: 1px;height: 40px; padding: 0 25px 0 25px;">
+        <span class="percent" >Starting </span>
+        <span class="material-icons loadingA">downloading</span>
     </div>
 
     <div id="art_container" style="position: fixed; z-index: -1;width: 100vw;height: calc(100vh - 280px); top: 70px;">

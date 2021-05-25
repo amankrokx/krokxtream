@@ -163,6 +163,10 @@ database.ref('songs/general/history').orderByChild('status').startAt('queued').o
 database.ref('command/general/').on('value', async(data) => {
     let r = data.val()
     console.log(r)
+    if(r.loadingState) {
+        document.querySelector('#loadingAudio').classList.remove('hidden')
+        document.querySelector('#loadingAudio span.percent').innerHTML = r.loading+' % '
+    } else {document.querySelector('#loadingAudio').classList.add('hidden')}
     if (r.play != 'end') {
         readFromAsync('chats/general/'+r.play).then(song => {
             console.log(song)
@@ -171,6 +175,16 @@ database.ref('command/general/').on('value', async(data) => {
         
 
     }
+})
+
+database.ref('command/sta').on('value', async(data) => {
+    let r = data.val()
+    console.log(r)
+    if(r.loadingState == 'true') {
+        document.querySelector('#loadingAudio').classList.remove('hidden')
+        document.querySelector('#loadingAudio span.percent').innerHTML = r.loading+' % '
+    } else {document.querySelector('#loadingAudio').classList.add('hidden')}
+    
 })
 
 function signout() {
