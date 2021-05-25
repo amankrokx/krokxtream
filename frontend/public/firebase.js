@@ -15,6 +15,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         // User is signed in.
         console.log(user)
         me = user
+        sync(user)
         let udata = readFrom('users/'+user.uid)
         if (!user.displayName) {
             let name = askinput('Please provide your Name .')
