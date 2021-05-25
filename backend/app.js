@@ -3,13 +3,9 @@ const cors = require('cors')
 const ytdl = require("ytdl-core")
 let yts = require('youtube-search-api');
 var firebase = require('firebase/app');
-let proxy = require('express-http-proxy');
-let https = require('https')
 let fetch = require('node-fetch');
-const { Console } = require('console');
-const { exists } = require('fs');
-const { resolve } = require('path');
 global.XMLHttpRequest = require("xhr2");
+var timeout = require('connect-timeout')
 
 require("firebase/auth");
 require("firebase/database");
@@ -18,7 +14,6 @@ const app = express()
 // Configure express plugins...
 app.use(cors())
  
-app.use('/proxy', proxy({ target: 'http://127.0.0.1:4001', changeOrigin: true }));
 
 
 let queue = [], playing, queuetimer
@@ -342,6 +337,6 @@ app.get('/ping', (req, res) => {
     res.send('pong')
 })
 
-
+app.use(timeout('30s'))
 const PORT = process.env.PORT || 4001
 let server = app.listen(PORT, () => console.log(`Running on ${PORT}`))
