@@ -1,5 +1,6 @@
  // version development 1.8.10 oyea oyea
- // ALMOST WROKING oh yea
+ // ALMOST WROKING oh yeaysvgadjkfvgvgh
+ //new update
  self.addEventListener('install', function(e) {
      e.waitUntil(
          caches.open('fox-store').then(function(cache) {
