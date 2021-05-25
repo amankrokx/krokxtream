@@ -148,7 +148,7 @@ let readFrom = (path) => {
 
 // Listen for chats in DB
 
-database.ref('chats/general').limitToLast(21).on('child_added', (data) => {
+database.ref('chats/general').limitToLast(41).on('child_added', (data) => {
     let chunk = data.val()
     appendmsg(chunk, data.key, 'general')
 })

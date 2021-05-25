@@ -159,100 +159,123 @@ let getdata = async(viaID, param) => {
                  let v = snapshot.val()
                  console.log(v)
                  if(v && v.url) {
-                    resolve({
-                        'thumbnail': videoInfo.videoDetails.thumbnails,
-                        'title': videoInfo.videoDetails.title,
-                        'length': videoInfo.videoDetails.lengthSeconds,
-                        'videoId': videoInfo.videoDetails.videoId,
-                        'media': videoInfo.videoDetails.media,
-                        'likes': videoInfo.videoDetails.likes,
-                        'dislikes': videoInfo.videoDetails.dislikes,
-                        'videoUrl': videoInfo.videoDetails.video_url,
-                        'audioUrl': v.url
-                    });
+                     if(v.data) {
+                         resolve({
+                             'thumbnail': v.data.thumbnail,
+                             'title': v.data.title,
+                             'videoUrl': v.data.video_url,
+                             'length': v.data.length,
+                             'videoId': v.data.videoId,
+                             'media': v.data.media,
+                             'likes': v.data.likes,
+                             'dislikes': v.data.dislikes,
+                             'audioUrl': v.url
+                         });
+
+                     } else {
+                         resolve({
+                             'thumbnail': videoInfo.videoDetails.thumbnails,
+                             'title': videoInfo.videoDetails.title,
+                             'length': videoInfo.videoDetails.lengthSeconds,
+                             'videoId': videoInfo.videoDetails.videoId,
+                             'media': videoInfo.videoDetails.media,
+                             'likes': videoInfo.videoDetails.likes,
+                             'dislikes': videoInfo.videoDetails.dislikes,
+                             'videoUrl': videoInfo.videoDetails.video_url,
+                             'audioUrl': v.url
+                         });
+                     }
                     return
                  } else {
-                    //promise
-                    new Promise(function async(resolve, reject) {
-                        database.ref('command/sta').update({
-                            'loadingState': 'true',
-                            'loading': 0
-                        })
                     
-                        let response = await fetch(a_url)
-                        let arrayBuffer = await response.arrayBuffer()
+                    database.ref('command/sta').update({
+                        'loadingState': 'true',
+                        'loading': 0
+                    })
                     
-                        var metadata = {
-                            contentType: 'audio/webm',
-                        };
-                    
-                        var e_url
-                    
-                        var uploadTask = storageRef.child('audio/'+v_id+'.webm').put(arrayBuffer, metadata);
-                    
-                        // Register three observers:
-                        // 1. 'state_changed' observer, called any time the state changes
-                        // 2. Error observer, called on failure
-                        // 3. Completion observer, called on successful completion
-                        uploadTask.on('state_changed', 
-                        (snapshot) => {
-                            // Observe state change events such as progress, pause, and resume
-                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            console.log('Upload is ' + progress + '% done');
-                            database.ref('command/sta').update({
-                                'loadingState': 'true',
-                                'loading': parseInt(progress)
-                            })
-                            /*switch (snapshot.state) {
-                            case firebase.storage.TaskState.PAUSED: // or 'paused'
-                                console.log('Upload is paused');
-                                break;
-                            case firebase.storage.TaskState.RUNNING: // or 'running'
-                                console.log('Upload is running');
-                                break;
-                            }*/
-                        }, 
-                        (error) => {
-                            // Handle unsuccessful uploads
-                            console.log(error)
-                            reject(error)
-                        }, 
-                        () => {
-                            // Handle successful uploads on complete
-                            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                                console.log('File available at', downloadURL)
+                    fetch(audioFormat.url).then((response)=> {
+
+                        response.arrayBuffer().then((arrayBuffer) => {
+                            var metadata = {
+                                contentType: 'audio/webm',
+                            };
+
+                            var uploadTask = storageRef.child('audio/'+videoInfo.videoDetails.videoId+'.webm').put(arrayBuffer, metadata);
+                            
+                            // Register three observers:
+                            // 1. 'state_changed' observer, called any time the state changes
+                            // 2. Error observer, called on failure
+                            // 3. Completion observer, called on successful completion
+                            uploadTask.on('state_changed', (snapshot) => {
+                                // Observe state change events such as progress, pause, and resume
+                                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                console.log('Upload is ' + progress + '% done');
                                 database.ref('command/sta').update({
-                                    'loadingState': 'false'
+                                    'loadingState': 'true',
+                                    'loading': parseInt(progress).toString()
                                 })
-                                database.ref('audio/'+v_id).set({
-                                    'url': downloadURL
-                                }).then(() => {
-                                    
-                                })
-                                    resolve(downloadURL)
-                    
-                            });
-                        }
-                        );
-                        
-                      
-                      }).then(function(ur) {
-                        console.log('resolved ', ur)
-                        resolve({
-                            'thumbnail': videoInfo.videoDetails.thumbnails,
-                            'title': videoInfo.videoDetails.title,
-                            'length': videoInfo.videoDetails.lengthSeconds,
-                            'videoId': videoInfo.videoDetails.videoId,
-                            'media': videoInfo.videoDetails.media,
-                            'likes': videoInfo.videoDetails.likes,
-                            'dislikes': videoInfo.videoDetails.dislikes,
-                            'videoUrl': videoInfo.videoDetails.video_url,
-                            'audioUrl': ur
+                                /*switch (snapshot.state) {
+                                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                    console.log('Upload is paused');
+                                    break;
+                                case firebase.storage.TaskState.RUNNING: // or 'running'
+                                    console.log('Upload is running');
+                                    break;
+                                }*/
+                                }, (error) => {
+                                    // Handle unsuccessful uploads
+                                    console.log(error)
+                                    resolve({
+                                        'thumbnail': videoInfo.videoDetails.thumbnails,
+                                        'title': videoInfo.videoDetails.title,
+                                        'length': videoInfo.videoDetails.lengthSeconds,
+                                        'videoId': videoInfo.videoDetails.videoId,
+                                        'media': videoInfo.videoDetails.media,
+                                        'likes': videoInfo.videoDetails.likes,
+                                        'dislikes': videoInfo.videoDetails.dislikes,
+                                        'videoUrl': videoInfo.videoDetails.video_url,
+                                        'audioUrl': audioFormat.url
+                                    })
+                                }, () => {
+                                    // Handle successful uploads on complete
+                                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                        console.log('File available at', downloadURL)
+                                        database.ref('command/sta').update({
+                                            'loadingState': 'false'
+                                        })
+                                        database.ref('audio/'+videoInfo.videoDetails.videoId).set({
+                                            'url': downloadURL,
+                                            'data': {
+                                                'thumbnail': videoInfo.videoDetails.thumbnails,
+                                                'title': videoInfo.videoDetails.title,
+                                                'length': videoInfo.videoDetails.lengthSeconds,
+                                                'videoId': videoInfo.videoDetails.videoId,
+                                                'media': videoInfo.videoDetails.media,
+                                                'likes': videoInfo.videoDetails.likes,
+                                                'dislikes': videoInfo.videoDetails.dislikes,
+                                                'videoUrl': videoInfo.videoDetails.video_url,
+                                            }
+                                        }).then(() => {
+                                            
+                                        })
+                                        resolve({
+                                            'thumbnail': videoInfo.videoDetails.thumbnails,
+                                            'title': videoInfo.videoDetails.title,
+                                            'length': videoInfo.videoDetails.lengthSeconds,
+                                            'videoId': videoInfo.videoDetails.videoId,
+                                            'media': videoInfo.videoDetails.media,
+                                            'likes': videoInfo.videoDetails.likes,
+                                            'dislikes': videoInfo.videoDetails.dislikes,
+                                            'videoUrl': videoInfo.videoDetails.video_url,
+                                            'audioUrl': downloadURL
+                                        })
+                                    });
+                                }
+                            );
                         })
-                      
-                      }).catch((er) => {
+                    }).catch((er) => {
                         console.log(er)
                         resolve({
                             'thumbnail': videoInfo.videoDetails.thumbnails,
@@ -266,6 +289,13 @@ let getdata = async(viaID, param) => {
                             'audioUrl': audioFormat.url
                         })
                     })
+                    
+                    
+                    
+                    
+                        
+                        
+                    
                       
                       
                  }
@@ -284,9 +314,6 @@ let getdata = async(viaID, param) => {
     });
   }
 
-  let downloadIt = async(a_url, v_id) => {
-    
-  }
 
 // Main function handle for API calls
 app.get('/getAudioUrl', async(req, res) => {

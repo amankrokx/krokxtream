@@ -16,7 +16,7 @@ window.onload = () => {
             let photo = readFrom('users/'+data.from.uid+'/photoUrl')
             if(!photo) photo = './media/letters/'+data.from.name.slice(0,1).toUpperCase()+'.svg'
             if (data.song) {
-                ref.innerHTML += `<div class="message" id="${key}"><img src="${photo}"><span class="name" id="${data.from.uid}"> ${data.from.name.split(' ')[0]}</span> <br /><div class="data noti">Added to Queue - <br /><center>${data.data.title}</center></div></div>`
+                ref.innerHTML += `<div class="message" id="${key}"><img src="${photo}"><span class="name" id="${data.from.uid}"> ${data.from.name.split(' ')[0]}</span> <br /><div class="data noti">Added to Queue - <span class="material-icons button" onclick="sendMessage('https://www.youtube.com/watch?v=${data.data.videoId}', true)" style="float: right;left: 250px;position: absolute;">replay</span><br /><center>${data.data.title}</center></div></div>`
                 
             }
             else {
@@ -77,8 +77,8 @@ window.onload = () => {
         if (validURL(query)) {
             let id = await extractID(query)
             if (id && id[1].length > 0) {
-                console.log(r[1])
-                fetch('http://localhost:4001/getAudioUrl?vid=' + r[1]).then(res => {
+                //console.log(id[1])
+                fetch('http://localhost:4001/getAudioUrl?vid=' + id[1]).then(res => {
                     return res.json()
                 }).then(song => {
                     writeTo(song, currentGroup, true)
@@ -113,7 +113,6 @@ window.onload = () => {
         pauseBtn.style.display = "inline-block"
         lasttime = 0
         newtime = 0
-        document.querySelector('div.bar span.length').innerHTML = ((Math.floor(audio.duration/60)) +'.'+ (audio.duration % 60))
         updatePositionState()
     }
 
@@ -205,6 +204,7 @@ window.onload = () => {
         if(!song.artist) song.artist = null
         if(!song.album) song.album = null
         document.querySelector('source').src = song.audioUrl
+        document.querySelector('div.bar span.length').innerHTML = ((Math.floor(parseInt(song['length'])/60)) +'.'+ (parseInt(song['length']) % 60))
         document.querySelector('#art_container img').src = song.thumbnail[song.thumbnail.length - 1].url
         document.querySelector('#player div div b span.title').innerHTML = song.title
         document.querySelector('#player div div span.artist').innerHTML = song.artist
