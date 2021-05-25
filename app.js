@@ -4,19 +4,21 @@ const ytdl = require("ytdl-core")
 let yts = require('youtube-search-api');
 var firebase = require('firebase/app');
 let proxy = require('express-http-proxy');
+let https = require('https')
+let fetch = require('node-fetch');
+const { Console } = require('console');
+const { exists } = require('fs');
+const { resolve } = require('path');
+global.XMLHttpRequest = require("xhr2");
 
 require("firebase/auth");
 require("firebase/database");
+require("firebase/storage");
 const app = express()
 // Configure express plugins...
 app.use(cors())
  
-app.use('/proxy', proxy(
-    req => req.query.host,
-    {
-     https: true,
-     proxyReqPathResolver: req => `${req.query.uri}&${process.env[`KEY_${req.query.provider.toUpperCase()}`]}`
-    }))
+app.use('/proxy', proxy({ target: 'http://127.0.0.1:4001', changeOrigin: true }));
 
 
 let queue = [], playing, queuetimer
@@ -120,6 +122,9 @@ var Timer = function(callback, delay) {
     
 }
 
+var storageRef = firebase.storage().ref();
+
+
 
 let getdata = async(viaID, param) => {
     return new Promise(async function(resolve, reject) {
@@ -134,27 +139,153 @@ let getdata = async(viaID, param) => {
             }
     
             const videoInfo = await ytdl.getInfo('https://www.youtube.com/watch?v=' + param)
+            /*var stream = ytdl.downloadFromInfo(videoInfo, {
+                filter: "audioonly",
+                quality: 'highestaudio'
+               })
+
+               let arrayBuffer = await stream.arrayBuffer()
+               let buffer = Uint8Array.from(arrayBuffer)*/
+
+
             let audioFormat = ytdl.chooseFormat(videoInfo.formats, {
                 filter: "audioonly",
                 quality: "highestaudio"
             });
-            //console.log(videoInfo.videoDetails.media)
-            resolve({
-                'thumbnail': videoInfo.videoDetails.thumbnail,
-                'title': videoInfo.videoDetails.title,
-                'length': videoInfo.videoDetails.lengthSeconds,
-                'videoId': videoInfo.videoDetails.videoId,
-                'media': videoInfo.videoDetails.media,
-                'likes': videoInfo.videoDetails.likes,
-                'dislikes': videoInfo.videoDetails.dislikes,
-                'videoUrl': videoInfo.videoDetails.video_url,
-                'audioUrl': audioFormat.url
-            })
+            /*console.log(videoInfo.videoDetails)
+            console.log(audioFormat)*/
+
+            database.ref('audio/'+videoInfo.videoDetails.videoId).once('value').then((snapshot) => {
+                 let v = snapshot.val()
+                 console.log(v)
+                 if(v && v.url) {
+                    resolve({
+                        'thumbnail': videoInfo.videoDetails.thumbnails,
+                        'title': videoInfo.videoDetails.title,
+                        'length': videoInfo.videoDetails.lengthSeconds,
+                        'videoId': videoInfo.videoDetails.videoId,
+                        'media': videoInfo.videoDetails.media,
+                        'likes': videoInfo.videoDetails.likes,
+                        'dislikes': videoInfo.videoDetails.dislikes,
+                        'videoUrl': videoInfo.videoDetails.video_url,
+                        'audioUrl': v.url
+                    });
+                    return
+                 } else {
+                    //promise
+                    new Promise(function async(resolve, reject) {
+                        database.ref('command/sta').update({
+                            'loadingState': 'true',
+                            'loading': 0
+                        })
+                    
+                        let response = await fetch(a_url)
+                        let arrayBuffer = await response.arrayBuffer()
+                    
+                        var metadata = {
+                            contentType: 'audio/webm',
+                        };
+                    
+                        var e_url
+                    
+                        var uploadTask = storageRef.child('audio/'+v_id+'.webm').put(arrayBuffer, metadata);
+                    
+                        // Register three observers:
+                        // 1. 'state_changed' observer, called any time the state changes
+                        // 2. Error observer, called on failure
+                        // 3. Completion observer, called on successful completion
+                        uploadTask.on('state_changed', 
+                        (snapshot) => {
+                            // Observe state change events such as progress, pause, and resume
+                            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            console.log('Upload is ' + progress + '% done');
+                            database.ref('command/sta').update({
+                                'loadingState': 'true',
+                                'loading': parseInt(progress)
+                            })
+                            /*switch (snapshot.state) {
+                            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                console.log('Upload is paused');
+                                break;
+                            case firebase.storage.TaskState.RUNNING: // or 'running'
+                                console.log('Upload is running');
+                                break;
+                            }*/
+                        }, 
+                        (error) => {
+                            // Handle unsuccessful uploads
+                            console.log(error)
+                            reject(error)
+                        }, 
+                        () => {
+                            // Handle successful uploads on complete
+                            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                                console.log('File available at', downloadURL)
+                                database.ref('command/sta').update({
+                                    'loadingState': 'false'
+                                })
+                                database.ref('audio/'+v_id).set({
+                                    'url': downloadURL
+                                }).then(() => {
+                                    
+                                })
+                                    resolve(downloadURL)
+                    
+                            });
+                        }
+                        );
+                        
+                      
+                      }).then(function(ur) {
+                        console.log('resolved ', ur)
+                        resolve({
+                            'thumbnail': videoInfo.videoDetails.thumbnails,
+                            'title': videoInfo.videoDetails.title,
+                            'length': videoInfo.videoDetails.lengthSeconds,
+                            'videoId': videoInfo.videoDetails.videoId,
+                            'media': videoInfo.videoDetails.media,
+                            'likes': videoInfo.videoDetails.likes,
+                            'dislikes': videoInfo.videoDetails.dislikes,
+                            'videoUrl': videoInfo.videoDetails.video_url,
+                            'audioUrl': ur
+                        })
+                      
+                      }).catch((er) => {
+                        console.log(er)
+                        resolve({
+                            'thumbnail': videoInfo.videoDetails.thumbnails,
+                            'title': videoInfo.videoDetails.title,
+                            'length': videoInfo.videoDetails.lengthSeconds,
+                            'videoId': videoInfo.videoDetails.videoId,
+                            'media': videoInfo.videoDetails.media,
+                            'likes': videoInfo.videoDetails.likes,
+                            'dislikes': videoInfo.videoDetails.dislikes,
+                            'videoUrl': videoInfo.videoDetails.video_url,
+                            'audioUrl': audioFormat.url
+                        })
+                    })
+                      
+                      
+                 }
+              })
+
+            
+
+            
+            
+        
+            
         } catch (e) {
             console.log('error')
             reject(e)
         }
     });
+  }
+
+  let downloadIt = async(a_url, v_id) => {
+    
   }
 
 // Main function handle for API calls

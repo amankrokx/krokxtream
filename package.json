@@ -8,6 +8,9 @@
         "express": "^4.17.1",
         "express-http-proxy": "^1.6.2",
         "firebase": "^8.6.2",
+        "firebase-admin": "^9.8.0",
+        "node-fetch": "^2.6.1",
+        "xhr2": "^0.2.1",
         "youtube-search-api": "^1.0.10",
         "ytdl-core": "^4.8.0"
     },
