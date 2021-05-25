@@ -78,7 +78,7 @@ window.onload = () => {
             let id = await extractID(query)
             if (id && id[1].length > 0) {
                 //console.log(id[1])
-                fetch('http://localhost:4001/getAudioUrl?vid=' + id[1]).then(res => {
+                fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?vid=' + id[1]).then(res => {
                     return res.json()
                 }).then(song => {
                     writeTo(song, currentGroup, true)
@@ -271,7 +271,7 @@ window.onload = () => {
 
 // Fetch song ID from query with rapidapi
 let playQuery = (query) => {
-    fetch('http://localhost:4001/getAudioUrl?search=' + encodeURI(query))
+    fetch('https://krokxtream-api.herokuapp.com/getAudioUrl?search=' + encodeURI(query))
                     .then(res => {
                         return res.json()
                     })
