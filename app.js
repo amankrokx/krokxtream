@@ -350,7 +350,7 @@ let getdata = async(viaID, param, name, uid) => {
               })
 
         } catch (e) {
-            console.log('error')
+            console.log(e)
             reject(e)
         }
     });
