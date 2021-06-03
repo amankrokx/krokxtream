@@ -148,7 +148,7 @@ let getdata = async(viaID, param, name, uid) => {
                 quality: "highestaudio"
             });
             //console.log(videoInfo.videoDetails)
-            //console.log(audioFormat)
+            console.log(audioFormat)
 
             database.ref('audio/'+videoInfo.videoDetails.videoId).once('value').then((snapshot) => {
                  let v = snapshot.val()
@@ -219,8 +219,7 @@ let getdata = async(viaID, param, name, uid) => {
                             console.time('d')
                             blob.buffer().then(data => {
                                 console.timeEnd('d')
-    
-                                var uploadTask = storageRef.child('audio/test'+videoInfo.videoDetails.videoId+'.webm').put(data, {contentType: audioFormat.mimeType});
+                                var uploadTask = storageRef.child('audio/'+videoInfo.videoDetails.videoId+'.webm').put(data, {contentType: audioFormat.mimeType});
                                 
                                 // Register three observers:
                                 // 1. 'state_changed' observer, called any time the state changes
@@ -277,7 +276,7 @@ let getdata = async(viaID, param, name, uid) => {
                                             database.ref('command/sta').update({
                                                 'loadingState': 'false'
                                             })
-                                            
+                                            return
                                             database.ref('audio/'+videoInfo.videoDetails.videoId).set({
                                                 'url': downloadURL,
                                                 'data': {
