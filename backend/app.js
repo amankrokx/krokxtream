@@ -148,7 +148,7 @@ let getdata = async(viaID, param, name, uid) => {
                 quality: "highestaudio"
             });
             //console.log(videoInfo.videoDetails)
-            console.log(audioFormat)
+            //console.log(audioFormat)
 
             database.ref('audio/'+videoInfo.videoDetails.videoId).once('value').then((snapshot) => {
                  let v = snapshot.val()
@@ -276,7 +276,7 @@ let getdata = async(viaID, param, name, uid) => {
                                             database.ref('command/sta').update({
                                                 'loadingState': 'false'
                                             })
-                                            return
+
                                             database.ref('audio/'+videoInfo.videoDetails.videoId).set({
                                                 'url': downloadURL,
                                                 'data': {
