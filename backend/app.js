@@ -13,7 +13,6 @@ const app = express()
 
 // Configure express plugins...
 app.use(cors())
- 
 
 
 let queue = [], playing, queuetimer
@@ -106,15 +105,13 @@ var Timer = function(callback, delay) {
         clearTimeout(timerId)
         timerId = setTimeout(callback, remaining)
     };
-    
+
     this.clear = function() {
-        
         clearTimeout(timerId)
     }
 
     this.resume()
 
-    
 }
 
 var storageRef = firebase.storage().ref();
@@ -132,7 +129,7 @@ let getdata = async(viaID, param, name, uid) => {
                     throw 'vidError'
                 }
             }
-    
+
             const videoInfo = await ytdl.getInfo('https://www.youtube.com/watch?v=' + param)
             /*var stream = ytdl.downloadFromInfo(videoInfo, {
                 filter: "audioonly",
@@ -206,13 +203,14 @@ let getdata = async(viaID, param, name, uid) => {
                      }
                     return
                  } else {
-                    
+
                     database.ref('command/sta').update({
                         'loadingState': 'true',
                         'loading': 0
                     })
                     //console.log(audioFormat.url)
                     console.time('d1')
+                    console.log(audioFormat)
                     fetch(audioFormat.url, {'headers': {'range': 'bytes=0-'+audioFormat.contentLength}})
                         .then((blob) => {
                             console.timeEnd('d1')
@@ -220,7 +218,7 @@ let getdata = async(viaID, param, name, uid) => {
                             blob.buffer().then(data => {
                                 console.timeEnd('d')
                                 var uploadTask = storageRef.child('audio/'+videoInfo.videoDetails.videoId+'.webm').put(data, {contentType: audioFormat.mimeType});
-                                
+
                                 // Register three observers:
                                 // 1. 'state_changed' observer, called any time the state changes
                                 // 2. Error observer, called on failure
@@ -344,8 +342,7 @@ let getdata = async(viaID, param, name, uid) => {
                             'videoUrl': videoInfo.videoDetails.video_url,
                             'audioUrl': audioFormat.url
                         })*/
-                    })   
-                      
+                    })
                  }
               })
 
@@ -408,7 +405,7 @@ app.get('/getAudioUrl', async(req, res) => {
                 //res.json(data)
             }).catch(error => {throw error})
         } else {throw 'empty_params'}
-        
+
     } catch (error) {
         console.log(error);
         res.error(403)
@@ -420,6 +417,10 @@ app.get('/ping', (req, res) => {
     // We will be coding here
     res.send('pong')
 })
+
+app.get('/', function(req, res){
+    res.redirect('https://krokxtream.web.app');
+});
 
 const PORT = process.env.PORT || 4001
 let server = app.listen(PORT, () => console.log(`Running on ${PORT}`))
